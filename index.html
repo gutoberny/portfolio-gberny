@@ -7,6 +7,9 @@
 
     <title>Portfolio Gberny</title>
     
+    <!--Box Icons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <!--Custom CSS-->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -14,16 +17,37 @@
     
     <!--Header-->
     <header class="header">
-
         <a href="#" class="logo">Portfolio</a>
 
+        <i class='bx bx-menu' id="menu-icon"></i>
+
         <nav class="navbar">
-            <a href="#home">Home</a>
+            <a href="#home" class="active">Home</a>
             <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#portfolio">Portfolio</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
+
+    <!-- Home section desing -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Hello, It's me</h3>
+            <h1>Gustavo Berny</h1>
+            <h3>And I'm <span>Fullstack Developer</span></h3>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa laborum nulla unde porro impedit molestiae nesciunt, nihil non dicta officia alias aperiam explicabo est corporis tempora qui sunt quasi aut?</p>
+            <div class="social-media">
+                <a href="#"><i class='bx bxl-instagram-alt' ></i></a>
+                <a href="#"><i class='bx bxl-github'></i></a>
+                <a href="#"><i class='bx bxl-linkedin-square'></i></a>
+            </div>
+            <a href="#" class="btn">Download Resume</a>
+        </div>
+        
+        <div class="home-img">
+            <img src="src/img/myself.jpg" alt="">
+        </div>
+    </section>
 </body>
 </html>
