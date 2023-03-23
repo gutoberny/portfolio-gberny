@@ -81,6 +81,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .home-img img {
@@ -139,8 +140,11 @@ span {
 }
 
 .btn {
-    display: inline-block;
-    padding: 1rem 2.8rem;
+    display: flex;
+    padding: .2rem 2.8rem;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
     background: var(--main-color);
     border-radius: 4rem;
     font-size: 1.6rem;
