@@ -1,4 +1,8 @@
-@import url('../src/fonts/Poppins-Regular.ttf');
+@font-face {
+    font-family: 'Daikon' ;
+    src: url('../src/fonts/Daikon-ExtraLight.otf');
+
+  }
 
 * {
     margin: 0;
@@ -8,7 +12,7 @@
     border: none;
     outline: none;
     scroll-behavior: smooth;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Daikon', sans-serif;
 }
 
 :root{
