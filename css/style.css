@@ -80,8 +80,10 @@ section {
 }
 
 .home-img img {
-    width: 35vw;
+    width: 25vw;
     border-radius: 50%;
+    box-shadow: 0 0 1rem var(--text-color);
+    border: .2rem solid var(--text-color);
 }
 
 .home-content h3 {
@@ -156,22 +158,21 @@ span {
 }
 
 .about-img img {
-    width: 35vw;
+    width: 25vw;
     border-radius: 50%;
+    box-shadow: 0 0 1rem var(--text-color);
+    border: .2rem solid var(--text-color);
 }
 
-.heading {
-    text-align: center;
-    font-size: 4.5rem;
-}
-
-.about-content h2 {
+.about-content h3 {
     text-align: left;
     line-height: 1.2;
 }
 
-.about-content h3 {
-    font-size: 2.6rem;
+.about-content h1 {
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 1.3;
 }
 
 .about-content p {
