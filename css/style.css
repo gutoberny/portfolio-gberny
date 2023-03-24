@@ -221,13 +221,13 @@ span {
     margin: 2rem 0 3rem;
 }
 
-/* Section Services*/
+/* Section skills*/
 
-.services h2 {
+.skills h2 {
     margin-bottom: 5rem;
 }
 
-.services-container {
+.skills-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,35 +235,58 @@ span {
     gap: 2rem;
 }
 
-.services-container .services-box {
-    flex: 1 1 30rem;
-    background: var(--second-bg-color);
-    padding: 3rem 2rem 4rem;
+.skills-container .skills-box {
+    flex: 1 1 3rem;
+    padding: 1rem .5rem .5rem;
     border-radius: 2rem;
     text-align: center;
     border: .2rem solid var(--bg-color);
     transition: .5s ease;
 }
 
-.services-container .services-box:hover {
+.skills-container .skills-box:hover {
     border-color: var(--main-color);
     transform: scale(1.02);
 }
 
-.services-box i {
+.skills-box i {
     font-size: 7rem;
     color: var(--main-color);
 }
 
-.services-box h3 {
+.skills-box h3 {
     font-size: 2.6rem;
 }
 
-.services-box p {
+.skills-box p {
     font-size: 1.6rem;
     margin: 1rem 0 3rem;
 }
 
+progress {
+    border: none;
+    width: 100px;
+    height: 6px;
+    background: var(--text-color);
+  }
+  
+  progress {
+    color: var(--bg-color);
+  }
+  
+  progress::-moz-progress-bar {
+    background: var(--text-color);
+
+  }
+  
+  progress::-webkit-progress-value {
+    background: var(--main-color);
+    
+  }
+  
+  progress::-webkit-progress-bar {
+    background: var(--text-color);
+  }
 /* Section Portfolio */
 
 .portfolio {
