@@ -223,6 +223,10 @@ span {
 
 /* Section skills*/
 
+.heading{
+    font-size: 3.6rem;
+}
+
 .skills h2 {
     margin-bottom: 5rem;
 }
@@ -268,25 +272,23 @@ progress {
     width: 100px;
     height: 6px;
     background: var(--text-color);
-  }
-  
-  progress {
-    color: var(--bg-color);
-  }
-  
-  progress::-moz-progress-bar {
-    background: var(--text-color);
+}
 
-  }
-  
-  progress::-webkit-progress-value {
-    background: var(--main-color);
-    
-  }
-  
-  progress::-webkit-progress-bar {
+progress {
+    color: var(--bg-color);
+}
+
+progress::-moz-progress-bar {
     background: var(--text-color);
-  }
+}
+
+progress::-webkit-progress-value {
+    background: var(--main-color);
+}
+
+progress::-webkit-progress-bar {
+    background: var(--text-color);
+}
 /* Section Portfolio */
 
 .portfolio {
@@ -344,22 +346,19 @@ progress {
 }
 
 .portfolio-layer h4 {
-    font-size: 3rem;
+    font-size: 1.8rem;
 }
 
 .portfolio-layer p {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     margin: .3rem 0 1rem;
 }
 
-.portfolio-layer a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    background: var(--text-color);
-    border-radius: 50%;
+.portfolio-layer a{
+    font-size: 1.7rem;
+    color: var(--text-color);
+    transition: .3s;
+    text-align: center;
 }
 
 .portfolio-layer a i {
