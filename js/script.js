@@ -13,7 +13,13 @@ ScrollReveal().reveal('.home-content h1, .about-img', { origin: 'left' });
 ScrollReveal().reveal('.home-content p, .about-content', { origin: 'right' });
 
 //Send Email
-function sendEmail() {
+function sendEmail(){
+    emailjs.init("_5cpveoqrrgv4uHfp");
+    send();
+};
+
+
+function send() {
     var params = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
@@ -21,7 +27,10 @@ function sendEmail() {
         title: document.getElementById('title').value,
         message: document.getElementById('message').value,
     }
-    
+    if(!params.name || !params.email || !params.title || !params.message) {
+        alert("Fill the required fields.");
+        return false;
+    }
     const serviceID = "service_egrmikc";
     const templateID = "template_kpp2evs";
     
@@ -32,7 +41,7 @@ function sendEmail() {
         document.getElementById("title").value = "";
         document.getElementById("message").value = "";
         console.log(res);
-        alert("Your message sent siccessfully");
+        alert("Thank you for your message!");
     })
     .catch((err) => console.log(err));
 }
