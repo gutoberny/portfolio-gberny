@@ -1,5 +1,5 @@
 # My Personal Portfolio
 
-Developed to introduce myself, my jorney and my skills.
+Developed to introduce myself, my journey, and my skills.
 
-Hope you enjoy!
+Hope you enjoy it!
