@@ -161,15 +161,15 @@
 
         <form action="#">
             <div class="input-box">
-                <input type="text" placeholder="Full Name">
-                <input type="email" placeholder="Email Adress">
+                <input id="name" type="text" placeholder="Full Name">
+                <input id="email" type="email" placeholder="Email Adress">
             </div>
             <div class="input-box">
-                <input type="number" placeholder="Mobile Number">
-                <input type="email" placeholder="Email Subject">
+                <input id="phone" type="number" placeholder="Mobile Number">
+                <input id="title" type="text" placeholder="Email Subject">
             </div>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
-            <input type="submit" value="Send Message" class="btn">
+            <textarea name="" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+            <input type="submit" value="Send Message" onclick="sendEmail()" class="btn">
         </form>
     </section>
 
@@ -188,5 +188,11 @@
     <!-- js -->
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="js/script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init("_5cpveoqrrgv4uHfp");
+    })();
+    </script>
 </body>
 </html>
