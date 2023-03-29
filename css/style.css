@@ -99,6 +99,7 @@ section {
 }
 
 .home-about {
+    margin-top: .8rem;
     color: var(--bg-color);
 }
 
