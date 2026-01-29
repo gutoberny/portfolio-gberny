@@ -1,0 +1,11 @@
+services:
+  portfolio:
+    container_name: portfolio-gberny
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3002:3000"
+    env_file:
+      - .env.local
