@@ -6,7 +6,7 @@ export const CV = {
       experience: [
         {
           role: "Lead Product Engineer (Founder)",
-          company: "GunSystem SaaS",
+          company: "Bunker Control",
           date: "2025 - Presente",
           description: "Desenvolvendo um ERP completo para gestão de Clubes de Tiro. Arquitetura Multi-tenant, Automação de Despachante com IA (processamento de documentos e geração de processos), Módulos Financeiros Integrados e deploy via Docker em VPS Linux."
         },
@@ -44,7 +44,7 @@ export const CV = {
         experience: [
           {
             role: "Lead Product Engineer (Founder)",
-            company: "GunSystem SaaS",
+            company: "Bunker Control",
             date: "2025 - Present",
             description: "Building a complete ERP for Shooting Club management. Multi-tenant architecture, AI Dispatcher Automation (document processing & workflow generation), Integrated Financial Modules, and Docker deployment on Linux VPS."
           },

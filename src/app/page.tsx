@@ -18,7 +18,7 @@ export default function Home() {
 
   const projects = [
     {
-       name: "GunSystem SaaS",
+       name: "Bunker Control",
        desc: {
          pt: "ERP Multi-tenant para Clubes de Tiro. Automação de despachante com IA e Gestão Financeira.",
          en: "Multi-tenant ERP for Shooting Clubs. AI Dispatcher Automation and Financial Management.",
