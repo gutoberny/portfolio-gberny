@@ -24,7 +24,7 @@ export default function Home() {
          en: "Multi-tenant ERP for Shooting Clubs. AI Dispatcher Automation and Financial Management.",
          es: "ERP Multi-tenant para Clubes de Tiro. Automatización de despachante con IA y Gestión Financiera."
        },
-       tech: "Next.js, Prisma, Docker",
+       tech: "React, Node.js, Prisma, Docker",
        url: "https://bunkercontrol.com.br"
     },
     {

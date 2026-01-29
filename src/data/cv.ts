@@ -20,12 +20,12 @@ export const CV = {
           role: "Senior Software Engineer",
           company: "Tech Previous",
           date: "2021 - Presente",
-          description: "Liderança técnica em projetos Fullstack (Next.js/Node.js). Foco em otimização de banco de dados (Prisma/Postgres) e CI/CD."
+          description: "Liderança técnica em projetos Fullstack (React/Node.js). Foco em otimização de banco de dados (Prisma/Postgres) e CI/CD."
         }
       ],
       skills: [
           "Arquitetura de Software", 
-          "Next.js (App Router)", 
+          "React", 
           "Node.js & TypeScript", 
           "AI Engineers (LangChain, Vercel AI)", 
           "Orquestração (n8n, Docker)", 
@@ -58,12 +58,12 @@ export const CV = {
             role: "Senior Software Engineer",
             company: "Tech Previous",
             date: "2021 - Present",
-            description: "Technical leadership in Fullstack projects (Next.js/Node.js). Focus on database optimization (Prisma/Postgres) and CI/CD."
+            description: "Technical leadership in Fullstack projects (React/Node.js). Focus on database optimization (Prisma/Postgres) and CI/CD."
           }
         ],
         skills: [
             "Software Architecture", 
-            "Next.js (App Router)", 
+            "React", 
             "Node.js & TypeScript", 
             "AI Engineers (LangChain, Vercel AI)", 
             "Orchestration (n8n, Docker)", 
