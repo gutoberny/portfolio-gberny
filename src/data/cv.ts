@@ -40,7 +40,13 @@ export const CV = {
       languages: [
           "Português (Nativo)",
           "Inglês (Avançado/Fluente em ambientes técnicos)"
-      ]
+      ],
+
+      contact: {
+        email: "gustavo.berny@example.com",
+        linkedin: "https://www.linkedin.com/in/gustavoberny",
+        github: "https://github.com/gustavoberny"
+      }
     },
     en: {
         name: "Gustavo Berny",
@@ -83,7 +89,13 @@ export const CV = {
         languages: [
             "Portuguese (Native)",
             "English (Advanced/Fluent for Technical)"
-        ]
+        ],
+
+      contact: {
+        email: "gustavo.berny@example.com",
+        linkedin: "https://www.linkedin.com/in/gustavoberny",
+        github: "https://github.com/gustavoberny"
+      }
     },
     es: {
         name: "Gustavo Berny",
@@ -126,6 +138,12 @@ export const CV = {
         languages: [
             "Portugués (Nativo)",
             "Inglés (Avanzado/Fluido en entornos técnicos)"
-        ]
+        ],
+
+      contact: {
+        email: "gustavo.berny@example.com",
+        linkedin: "https://www.linkedin.com/in/gustavoberny",
+        github: "https://github.com/gustavoberny"
+      }
     }
   };

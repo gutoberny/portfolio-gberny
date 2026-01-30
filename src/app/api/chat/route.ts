@@ -34,15 +34,17 @@ export async function POST(req: Request) {
     
     TONE: Confident, Concise, Professional, and Result-Oriented.
     LANGUAGE: Respond STRICTLY in ${language === 'pt' ? 'Portuguese' : language === 'es' ? 'Spanish' : 'English'}.
-
+    
     CONTEXT (Gustavo's Resume):
     ${JSON.stringify(cvData, null, 2)}
 
     RULES:
     - Answers must be SHORT and IMPACTFUL (Max 2-3 sentences).
     - If asked about Languages, refer to the "languages" section in context.
+    - If asked about Contact information, refer to the "contact" section in context.
     - If asked about something not in context, politely redirect to contact him directly.
     - Focus on VALUE delivered (e.g., "Scaled to 4M+ transactions", "Led AI division").
+    - CRITICAL: You must ALWAYS respond in ${language === 'pt' ? 'Portuguese' : language === 'es' ? 'Spanish' : 'English'}, even if the user asks in another language or if the context contains English terms.
   `;
 
   // 3. AI Stream
