@@ -1,36 +1,41 @@
 export const CV = {
     pt: {
       name: "Gustavo Berny",
-      role: "Lead Product Engineer & AI Specialist",
-      about: "Engenheiro de Software Sênior com foco em arquitetura de produtos escaláveis e Agentes de IA Autônomos. Especialista em transformar processos complexos de negócios em software elegante e performático. Atualmente liderando o desenvolvimento do GunSystem e orquestrações de IA para automação empresarial.",
+      role: "Engenheiro de Produto Líder & Especialista em IA",
+      about: "Engenheiro de Software Sênior com 10 anos de experiência na indústria tecnológica. Especialista no desenvolvimento de sistemas escaláveis utilizando Node.js e ReactJS, com foco avançado em bancos de dados (PostgreSQL/MySQL). Histórico sólido na implementação de Chatbots com IA e arquiteturas financeiras de alto volume.",
       experience: [
         {
-          role: "Lead Product Engineer (Founder)",
-          company: "Bunker Control",
-          date: "2025 - Presente",
-          description: "Desenvolvendo um ERP completo para gestão de Clubes de Tiro. Arquitetura Multi-tenant, Automação de Despachante com IA (processamento de documentos e geração de processos), Módulos Financeiros Integrados e deploy via Docker em VPS Linux."
+          role: "Lead Product Engineer & AI Specialist",
+          company: "Imply",
+          date: "Fev 2025 - Presente",
+          description: "Liderança da nova divisão de IA. Definição de arquitetura para modelos generativos (LLMs). Desenvolvimento de agentes de IA e automações complexas. Gestão de Backlog de Produto (PO) priorizando valor técnico."
         },
         {
-           role: "Founder & AI Architect",
-           company: "Bernyflow",
-           date: "2025 - Presente",
-           description: "Agência de Automação e IA. Orquestração de agentes autônomos para empresas, implementando SAC Inteligente (n8n + Evolution API), Prospecção Automatizada e RAG para análise de contratos."
+           role: "Desenvolvedor Fullstack Pleno",
+           company: "Sellflux",
+           date: "Set 2023 - Jan 2025",
+           description: "Desenvolvimento integral de Chatbot com IA otimizado com bancos de dados vetoriais (PostgreSQL). Criação de APIs RESTful robustas (Node.js/Express) e testes de integração (Jest)."
         },
         {
-          role: "Senior Software Engineer",
-          company: "Tech Previous",
-          date: "2021 - Presente",
-          description: "Liderança técnica em projetos Fullstack (React/Node.js). Foco em otimização de banco de dados (Prisma/Postgres) e CI/CD."
+          role: "Desenvolvedor Backend",
+          company: "Imply",
+          date: "Ago 2021 - Set 2023",
+          description: "Design de sistema de cobrança automática (+107k usuários, +R$ 4M/mês). Liderança técnica em sistemas de faturamento e controle de acessos para grandes volumes."
+        },
+        {
+          role: "Analista de Suporte / Consultor ERP",
+          company: "RM Software",
+          date: "Fev 2015 - Abr 2020",
+          description: "Implementação e suporte de sistemas ERP para gestão contábil e faturamento."
         }
       ],
       skills: [
-          "Arquitetura de Software", 
-          "React", 
-          "Node.js & TypeScript", 
-          "AI Engineers (LangChain, Vercel AI)", 
-          "Orquestração (n8n, Docker)", 
-          "Database (Postgres, Prisma)", 
-          "DevOps (AWS, VPS, Nginx)"
+          "Node.js (Express) & PHP", 
+          "ReactJS (Interfaces modernas)", 
+          "PostgreSQL & MySQL (Otimização)", 
+          "IA & Chatbots (Vector DBs)", 
+          "Testing (Jest, TDD)", 
+          "Gestão de Produto (Scrum/Kanban)"
       ],
       languages: [
           "Português (Nativo)",
@@ -40,35 +45,40 @@ export const CV = {
     en: {
         name: "Gustavo Berny",
         role: "Lead Product Engineer & AI Specialist",
-        about: "Senior Software Engineer focused on scalable product architecture and Autonomous AI Agents. Expert in transforming complex business processes into elegant, high-performance software. Currently leading GunSystem development and AI orchestration for enterprise automation.",
+        about: "Senior Software Engineer with 10 years of experience in the tech industry. Specialist in developing scalable systems using Node.js and ReactJS, with expert focus on databases (PostgreSQL/MySQL). Solid track record in implementing AI Chatbots and high-volume financial architectures.",
         experience: [
           {
-            role: "Lead Product Engineer (Founder)",
-            company: "Bunker Control",
-            date: "2025 - Present",
-            description: "Building a complete ERP for Shooting Club management. Multi-tenant architecture, AI Dispatcher Automation (document processing & workflow generation), Integrated Financial Modules, and Docker deployment on Linux VPS."
+            role: "Lead Product Engineer & AI Specialist",
+            company: "Imply",
+            date: "Feb 2025 - Present",
+            description: "Leading the new AI division. Defining architecture for generative models (LLMs). Development of AI agents and complex automations. Product Backlog Management (PO) prioritizing technical value."
           },
           {
-             role: "Founder & AI Architect",
-             company: "Bernyflow",
-             date: "2025 - Present",
-             description: "AI Automation Agency. Orchestrating autonomous agents for businesses, implementing Intelligent SAC (n8n + Evolution API), Automated Prospecting, and RAG for contract analysis."
+             role: "Mid-Level Fullstack Developer",
+             company: "Sellflux",
+             date: "Sep 2023 - Jan 2025",
+             description: "End-to-end development of AI Chatbot optimized with vector databases (PostgreSQL). Creation of robust RESTful APIs (Node.js/Express) and integration tests (Jest)."
           },
           {
-            role: "Senior Software Engineer",
-            company: "Tech Previous",
-            date: "2021 - Present",
-            description: "Technical leadership in Fullstack projects (React/Node.js). Focus on database optimization (Prisma/Postgres) and CI/CD."
+            role: "Backend Developer",
+            company: "Imply",
+            date: "Aug 2021 - Sep 2023",
+            description: "Design of automated billing system (+107k users, +R$ 4M/month). Technical leadership in billing systems and access control for high volumes."
+          },
+          {
+            role: "Support Analyst / ERP Consultant",
+            company: "RM Software",
+            date: "Feb 2015 - Apr 2020",
+            description: "Implementation and support of ERP systems for accounting management and billing."
           }
         ],
         skills: [
-            "Software Architecture", 
-            "React", 
-            "Node.js & TypeScript", 
-            "AI Engineers (LangChain, Vercel AI)", 
-            "Orchestration (n8n, Docker)", 
-            "Database (Postgres, Prisma)", 
-            "DevOps (AWS, VPS, Nginx)"
+            "Node.js (Express) & PHP", 
+            "ReactJS (Modern Interfaces)", 
+            "PostgreSQL & MySQL (Optimization)", 
+            "AI & Chatbots (Vector DBs)", 
+            "Testing (Jest, TDD)", 
+            "Product Management (Scrum/Kanban)"
         ],
         languages: [
             "Portuguese (Native)",
