@@ -144,7 +144,7 @@ export default function Home() {
       <hr className="border-neutral-200" />
 
       {/* STACK (Optional visual addition) */}
-      <section className="pb-20">
+      <section>
          <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 mb-8 font-mono">
           # tech_stack
         </h2>
@@ -153,6 +153,32 @@ export default function Home() {
                 <span key={skill} className="hover:text-black hover:bg-neutral-100 px-2 -ml-2 rounded cursor-default transition-colors">
                     {skill}
                 </span>
+            ))}
+        </div>
+      </section>
+
+      <hr className="border-neutral-200" />
+
+      {/* EDUCATION */}
+      <section className="pb-20">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 mb-8 font-mono">
+          # {language === 'pt' ? 'formacao' : language === 'es' ? 'formacion' : 'education'}
+        </h2>
+        <div className="space-y-6">
+            {currentCV.education.map((edu, i) => (
+                <div key={i} className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 max-w-2xl">
+                    <div>
+                        <h3 className="font-bold text-base text-black">
+                            {edu.course}
+                        </h3>
+                        <div className="text-sm text-neutral-600">
+                            {edu.institution}
+                        </div>
+                    </div>
+                    <span className="text-xs font-mono text-neutral-500 bg-neutral-100 px-2 py-1 rounded border border-neutral-200 w-fit">
+                        {edu.status}
+                    </span>
+                </div>
             ))}
         </div>
       </section>
