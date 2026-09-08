@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Language = 'pt' | 'en' | 'es';
+export type Language = 'pt' | 'en' | 'es';
 
 interface LanguageContextType {
   language: Language;

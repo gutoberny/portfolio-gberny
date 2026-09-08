@@ -12,6 +12,11 @@ const limiter = rateLimit({
 
 export const maxDuration = 30;
 
+interface IncomingChatMessage {
+  role: string;
+  content: string;
+}
+
 export async function POST(req: Request) {
   // 1. Rate Limiting Logic
   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
@@ -51,7 +56,7 @@ export async function POST(req: Request) {
   const result = await streamText({
     model: google('gemini-2.5-flash'),
     system: systemPrompt,
-    messages: messages.map((m: any) => ({
+    messages: messages.map((m: IncomingChatMessage) => ({
       role: m.role,
       content: m.content,
     })),

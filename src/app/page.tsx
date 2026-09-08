@@ -1,12 +1,14 @@
 "use client";
 
-import { useLanguage } from "@/context/LanguageContext";
-import { TerminalChat } from "@/components/TerminalChat"; 
+import { useLanguage, type Language } from "@/context/LanguageContext";
+import { TerminalChat } from "@/components/TerminalChat";
 import { CV } from "@/data/cv";
+
+const LANGUAGES: Language[] = ["pt", "en", "es"];
 
 export default function Home() {
   const { language, setLanguage } = useLanguage();
-  
+
   // Cast language to access CV keys safely
   const currentCV = CV[language as keyof typeof CV];
 
@@ -34,10 +36,10 @@ export default function Home() {
       
       {/* LANGUAGE SWITCHER */}
       <div className="absolute top-6 right-6 flex gap-3 text-sm text-neutral-400 font-mono">
-         {['pt', 'en', 'es'].map((lang) => (
-           <button 
+         {LANGUAGES.map((lang) => (
+           <button
              key={lang}
-             onClick={() => setLanguage(lang as any)}
+             onClick={() => setLanguage(lang)}
              className={`hover:text-black transition-colors ${language === lang ? 'text-black font-bold underline decoration-2 underline-offset-4' : ''}`}
            >
              {lang.toUpperCase()}
@@ -95,7 +97,7 @@ export default function Home() {
                  </span>
                </div>
                <p className="text-neutral-600 text-base leading-relaxed max-w-2xl">
-                 {(project.desc as any)[language]}
+                 {project.desc[language]}
                </p>
              </div>
            ))}

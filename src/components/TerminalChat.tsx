@@ -5,13 +5,19 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Terminal, X, Minimize2, Maximize2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
+
 export function TerminalChat() {
   const { language } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  
+
   // Manual message state to handle raw stream
-  const [messages, setMessages] = useState<any[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
       { 
         id: "0", 
         role: "assistant", 
@@ -35,7 +41,7 @@ export function TerminalChat() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage = { id: Date.now().toString(), role: 'user', content: input };
+    const userMessage: ChatMessage = { id: Date.now().toString(), role: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -56,7 +62,7 @@ export function TerminalChat() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
-      let assistantMessage = { id: Date.now().toString() + '_ai', role: 'assistant', content: '' };
+      const assistantMessage: ChatMessage = { id: Date.now().toString() + '_ai', role: 'assistant', content: '' };
       
       setMessages(prev => [...prev, assistantMessage]);
 
@@ -123,7 +129,7 @@ export function TerminalChat() {
       {!isMinimized && (
         <div className="flex flex-col h-[calc(100%-40px)] p-4 bg-black/95">
           <div className="flex-1 overflow-y-auto space-y-2 scrollbar-hide font-mono text-xs md:text-sm" ref={scrollRef}>
-             {messages.map((m: any) => (
+             {messages.map((m) => (
                <div key={m.id} className="break-words">
                  <span className={`${m.role === 'user' ? 'text-blue-400' : 'text-green-500'} font-bold mr-2 select-none`}>
                    {m.role === 'user' ? 'visitor@portfolio:~$' : 'gustavo_ai&gt;'}
