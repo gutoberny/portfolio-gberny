@@ -5,11 +5,19 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const LANGS: Lang[] = ["en", "pt", "es"];
 
+// Rótulo do grupo de botões de idioma. UI chrome, não conteúdo do CV —
+// não pertence a src/content/ (esse layer é das Tasks 3-4).
+const LANGUAGE_GROUP_LABEL: Record<Lang, string> = {
+  en: "Language",
+  pt: "Idioma",
+  es: "Idioma",
+};
+
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="Language">
+    <div className="flex items-center gap-1" role="group" aria-label={LANGUAGE_GROUP_LABEL[language]}>
       {LANGS.map((lang) => {
         const active = lang === language;
         return (
