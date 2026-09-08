@@ -1,10 +1,12 @@
 export function SectionHeading({
   eyebrow,
   title,
+  meta,
   id,
 }: {
   eyebrow: string;
   title?: string;
+  meta?: string;
   id?: string;
 }) {
   return (
@@ -17,6 +19,7 @@ export function SectionHeading({
           {title}
         </h2>
       ) : null}
+      {meta ? <p className="eyebrow mt-2">{meta}</p> : null}
     </div>
   );
 }
