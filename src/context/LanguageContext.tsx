@@ -17,19 +17,24 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // Necessário porque o evento 'storage' não dispara na tab que fez a mudança.
 const listeners: Set<() => void> = new Set();
 
-// Lê localStorage com segurança, retornando a língua salva ou o padrão inglês.
+// Verdade em-memória da linguagem atual. Independente de localStorage:
+// quando storage é bloqueado, essa variável persiste a escolha do usuário nesta sessão.
+let currentLanguage: Lang = "en";
+
+// Lê localStorage com segurança, ou volta para o valor em-memória se bloqueado.
 // Ler localStorage no primeiro render causaria divergência entre servidor e cliente,
 // então usamos useSyncExternalStore que sincroniza esse estado externo honestamente.
 function getSnapshot(): Lang {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved && SUPPORTED.includes(saved as Lang)) {
+      currentLanguage = saved as Lang;
       return saved as Lang;
     }
   } catch {
-    // localStorage bloqueado (aba privada, política do navegador): fica em inglês.
+    // localStorage bloqueado (aba privada, política do navegador): usa valor em-memória.
   }
-  return "en";
+  return currentLanguage;
 }
 
 // Servidor sempre renderiza em inglês. Garante que servidor e cliente concordam
@@ -60,10 +65,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [language]);
 
   const setLanguage = (lang: Lang) => {
+    currentLanguage = lang;
     try {
       window.localStorage.setItem(STORAGE_KEY, lang);
     } catch {
-      // sem persistência é aceitável; a troca vale para a sessão.
+      // sem persistência é aceitável; a escolha vale para a sessão via currentLanguage.
     }
     // Notifica listeners locais (outras tabs notificam via evento 'storage').
     listeners.forEach((listener) => listener());
