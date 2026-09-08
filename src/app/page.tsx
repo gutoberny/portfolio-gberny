@@ -1,10 +1,11 @@
 "use client";
 
-import { useLanguage, type Language } from "@/context/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
+import type { Lang } from "@/content";
 import { TerminalChat } from "@/components/TerminalChat";
 import { CV } from "@/data/cv";
 
-const LANGUAGES: Language[] = ["pt", "en", "es"];
+const LANGUAGES: Lang[] = ["pt", "en", "es"];
 
 export default function Home() {
   const { language, setLanguage } = useLanguage();
