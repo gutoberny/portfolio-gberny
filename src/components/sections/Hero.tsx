@@ -1,11 +1,20 @@
 "use client";
 
 import { getContent } from "@/content";
+import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { MetricStrip } from "@/components/ui/MetricStrip";
 import { Portrait } from "@/components/ui/Portrait";
 import type { ReactNode } from "react";
+
+// Rótulo do <nav> de links de contato. UI chrome, não conteúdo do CV —
+// não pertence a src/content/ (esse layer é das Tasks 3-4).
+const LINKS_NAV_LABEL: Record<Lang, string> = {
+  en: "Links",
+  pt: "Links",
+  es: "Enlaces",
+};
 
 export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
   const { language } = useLanguage();
@@ -13,11 +22,19 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
 
   return (
     <header className="shell pt-8 pb-10 md:pt-14">
+      {/* No mobile o switcher ganha linha própria: em conjunto com foto e
+          disponibilidade na coluna direita ele espremia o eyebrow em 3
+          linhas. No desktop ele volta para a coluna direita, junto da foto
+          — composição 6 aprovada, sem alteração. */}
+      <div className="flex justify-end md:hidden">
+        <LanguageSwitcher />
+      </div>
+
       {/* Linha de identidade: eyebrow + nome à esquerda, foto pequena e
           disponibilidade à direita — composição 6 aprovada. */}
-      <div className="flex items-start justify-between gap-5">
+      <div className="mt-2 flex items-start justify-between gap-5 md:mt-0">
         <div>
-          <p data-gate="role" className="eyebrow max-w-[22ch] md:max-w-none">
+          <p data-gate="role" className="eyebrow max-w-[30ch] md:max-w-none">
             {profile.eyebrow}
           </p>
           <h1 data-gate="name" className="display mt-3 text-[23px] md:text-[30px]">
@@ -27,9 +44,11 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
         </div>
 
         <div className="flex flex-col items-end gap-2">
-          <LanguageSwitcher />
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
           <Portrait src={profile.photo.src} alt={profile.photo.alt} size={40} />
-          <p className="eyebrow text-right">{profile.availability}</p>
+          <p className="eyebrow max-w-[120px] text-right md:max-w-none">{profile.availability}</p>
         </div>
       </div>
 
@@ -45,7 +64,7 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
               {p}
             </p>
           ))}
-          <nav className="mt-4 flex flex-wrap gap-x-5 gap-y-1" aria-label="Links">
+          <nav className="mt-4 flex flex-wrap gap-x-5 gap-y-1" aria-label={LINKS_NAV_LABEL[language]}>
             {profile.links.map((l) => (
               <a
                 key={l.href}
@@ -53,9 +72,13 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
                 data-gate={l.kind === "cv" ? "cv" : undefined}
                 target={l.kind === "email" ? undefined : "_blank"}
                 rel={l.kind === "email" ? undefined : "noopener noreferrer"}
-                className="eyebrow inline-flex min-h-11 min-w-11 -mx-2 items-center justify-center border-b border-[color:var(--rule)] px-2 text-[color:var(--body)] transition-colors hover:border-[color:var(--ink)] hover:text-[color:var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
+                className="group inline-flex min-h-11 min-w-11 -mx-2 items-center justify-center px-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
               >
-                {l.label}
+                {/* Sublinhado no span, dimensionado ao texto — o alvo de
+                    toque de 44px fica no <a>, sem esticar a régua. */}
+                <span className="eyebrow border-b border-[color:var(--rule)] text-[color:var(--body)] transition-colors group-hover:border-[color:var(--ink)] group-hover:text-[color:var(--ink)]">
+                  {l.label}
+                </span>
               </a>
             ))}
           </nav>
