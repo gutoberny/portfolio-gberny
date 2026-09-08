@@ -24,3 +24,47 @@ export interface Metric {
   label: string;
   detail: string;
 }
+
+export interface Project {
+  slug: string;
+  name: string;
+  /** Ex.: "AI agent platform · Imply" */
+  kind: string;
+  period: string;
+  summary: string;
+  highlights: string[];
+  stack: string;
+  /** URL pública do projeto, quando existir. */
+  href?: string;
+  /** Rota interna do case study, quando existir. */
+  caseStudyHref?: string;
+}
+
+export interface Job {
+  role: string;
+  company: string;
+  period: string;
+  /** Uma linha. Nunca parágrafo. */
+  impact: string;
+}
+
+export interface StackGroup {
+  title: string;
+  items: string[];
+}
+
+export interface Pillar {
+  title: string;
+  body: string;
+}
+
+export interface Study {
+  course: string;
+  institution: string;
+  status: string;
+}
+
+export interface LanguageSkill {
+  name: string;
+  level: string;
+}
