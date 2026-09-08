@@ -42,3 +42,6 @@ next-env.d.ts
 
 # brainstorming mockups
 .superpowers/
+
+# gate visual (task 1)
+.gate/
