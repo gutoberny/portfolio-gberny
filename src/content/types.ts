@@ -13,7 +13,13 @@ export interface Profile {
   eyebrow: string;
   tagline: string;
   pitch: string[];
-  availability: string;
+  /** Linha de autoria acima da faixa de métricas: põe o Gustavo como sujeito
+   *  dos números, para a faixa não ler como ficha técnica de um produto. */
+  authorship: string;
+  /** Localização e fuso: o que um recrutador internacional precisa saber ali
+   * (dá para sobrepor horário?). NÃO é declaração de disponibilidade para
+   * vagas — essa vive no LinkedIn, visível só para recrutadores. */
+  location: string;
   links: Link[];
   /** Ausente hoje — não há foto do dono do site. Quando houver uma, defina
    * este campo em `profile.ts` (os três idiomas) e `Portrait` passa a

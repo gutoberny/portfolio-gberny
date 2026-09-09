@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://gustavoberny.com"),
   title: "Gustavo Berny — Senior Software Engineer · Applied AI & Agents",
   description:
-    "Lead developer and architect of a multi-tenant AI agent platform in production: 6,570 of 7,725 conversations (85%) resolved end-to-end by AI in Aug/2026, ~153k messages a month, $0.12 per completed conversation. Open to remote roles.",
+    "Lead developer and architect of a multi-tenant AI agent platform in production: 6,570 of 7,725 conversations (85%) resolved end-to-end by AI in Aug/2026, ~153k messages a month, $0.12 per completed conversation.",
   openGraph: {
     type: "website",
     title: "Gustavo Berny — Senior Software Engineer · Applied AI & Agents",

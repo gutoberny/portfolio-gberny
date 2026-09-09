@@ -5,9 +5,9 @@ import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 
 const COPY: Record<Lang, { eyebrow: string; title: string }> = {
-  en: { eyebrow: "Contact", title: "Open to remote roles in AI engineering." },
-  pt: { eyebrow: "Contato", title: "Aberto a vagas remotas em engenharia de IA." },
-  es: { eyebrow: "Contacto", title: "Disponible para vacantes remotas en ingeniería de IA." },
+  en: { eyebrow: "Contact", title: "If any of this is useful to you, let's talk." },
+  pt: { eyebrow: "Contato", title: "Se algo disso te for útil, vamos conversar." },
+  es: { eyebrow: "Contacto", title: "Si algo de esto te resulta útil, hablemos." },
 };
 
 // Rótulo do <nav> de links de contato. UI chrome, não conteúdo do CV —

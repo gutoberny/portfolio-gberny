@@ -35,8 +35,10 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
       {/* Linha de identidade: eyebrow + nome à esquerda, foto pequena e
           disponibilidade à direita — composição 6 aprovada. */}
       <div className="mt-2 flex items-start justify-between gap-5 md:mt-0">
-        <div>
-          <p data-gate="role" className="eyebrow max-w-[30ch] md:max-w-none">
+        {/* flex-1/min-w-0: sem isso o flex encolhe esta coluna abaixo do
+            max-w do eyebrow e ele quebra em 3 linhas em 390px. */}
+        <div className="min-w-0 flex-1">
+          <p data-gate="role" className="eyebrow max-w-[36ch] md:max-w-none">
             {profile.eyebrow}
           </p>
           <h1 data-gate="name" className="display mt-3 text-[23px] md:text-[30px]">
@@ -45,17 +47,20 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
           <p className="mt-2 text-sm text-[color:var(--body)] md:text-base">{profile.tagline}</p>
         </div>
 
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex shrink-0 flex-col items-end gap-2">
           <div className="hidden md:block">
             <LanguageSwitcher />
           </div>
           <Portrait src={profile.photo?.src} alt={profile.photo?.alt ?? profile.name} size={40} />
-          <p className="eyebrow max-w-[120px] text-right md:max-w-none">{profile.availability}</p>
+          <p className="eyebrow whitespace-nowrap text-right">{profile.location}</p>
         </div>
       </div>
 
-      {/* A prova vem antes de qualquer prosa. */}
+      {/* A prova vem antes de qualquer prosa — mas com AUTORIA antes dela, para
+          a faixa ler como resultado do trabalho dele e não como ficha técnica
+          de um produto. */}
       <div className="mt-6 md:mt-8">
+        <p className="eyebrow mb-2 text-[color:var(--ink)]">{profile.authorship}</p>
         <MetricStrip metrics={heroMetrics} />
       </div>
 
