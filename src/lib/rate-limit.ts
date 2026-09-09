@@ -1,43 +1,26 @@
+import { LRUCache } from "lru-cache";
 
 type RateLimitOptions = {
-    interval: number;
-    uniqueTokenPerInterval: number;
+  /** Janela em milissegundos. */
+  interval: number;
+  /** Teto de tokens (IPs) distintos mantidos em memória na janela. */
+  uniqueTokenPerInterval: number;
+};
+
+export default function rateLimit(options: RateLimitOptions) {
+  // LRU com TTL: cada IP expira sozinho e o cache nunca passa de
+  // uniqueTokenPerInterval entradas. O Map anterior crescia sem limite.
+  const tokenCache = new LRUCache<string, number>({
+    max: options.uniqueTokenPerInterval,
+    ttl: options.interval,
+  });
+
+  return {
+    /** true quando o token JÁ estourou o limite. Conta esta chamada. */
+    isRateLimited: (token: string, limit: number) => {
+      const count = (tokenCache.get(token) || 0) + 1;
+      tokenCache.set(token, count);
+      return count > limit;
+    },
   };
-  
-  export default function rateLimit(options: RateLimitOptions) {
-    const tokenCache = new Map();
-    let lastReset = Date.now();
-  
-    return {
-      check: (limit: number, token: string) =>
-        new Promise<void>((resolve, reject) => {
-          const now = Date.now();
-          // Reset cache if interval passed
-          if (now - lastReset > options.interval) {
-             tokenCache.clear();
-             lastReset = now;
-          }
-           
-          const tokenCount = (tokenCache.get(token) || 0) + 1;
-  
-          if (tokenCount > limit) {
-             reject();
-          } else {
-             tokenCache.set(token, tokenCount);
-             resolve();
-          }
-        }),
-      isRateLimited: (token: string, limit: number) => {
-           const now = Date.now();
-           if (now - lastReset > options.interval) {
-              tokenCache.clear();
-              lastReset = now;
-           }
-            
-           const tokenCount = (tokenCache.get(token) || 0) + 1;
-           tokenCache.set(token, tokenCount);
-           
-           return tokenCount > limit;
-      }
-    };
-  }
+}

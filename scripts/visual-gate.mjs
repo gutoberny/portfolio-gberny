@@ -96,11 +96,20 @@ try {
       // 3. Above the fold da home
       if (route.path === "/") {
         const fold = await page.evaluate((vh) => {
+          // Verdadeiro quando QUALQUER elemento casando com sel intersecta a
+          // primeira tela — não só o primeiro do DOM. Necessário porque a
+          // home renderiza dois elementos [data-gate=agent] (terminal
+          // desktop hidden md:flex + barra mobile md:hidden): no mobile o
+          // primeiro em ordem de DOM é o terminal desktop, invisível e com
+          // rect zerado, e um querySelector ingênuo reportaria falso
+          // negativo mesmo com a barra mobile plenamente visível.
           const visible = (sel) => {
-            const el = document.querySelector(sel);
-            if (!el) return false;
-            const r = el.getBoundingClientRect();
-            return r.top < vh && r.bottom > 0;
+            const els = document.querySelectorAll(sel);
+            if (els.length === 0) return false;
+            return [...els].some((el) => {
+              const r = el.getBoundingClientRect();
+              return r.top < vh && r.bottom > 0;
+            });
           };
           const inFold = (el) => {
             const r = el.getBoundingClientRect();

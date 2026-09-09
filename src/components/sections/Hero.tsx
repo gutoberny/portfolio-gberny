@@ -3,6 +3,8 @@
 import { getContent } from "@/content";
 import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
+import { AgentSheet } from "@/components/ui/AgentSheet";
+import { AgentTerminal } from "@/components/ui/AgentTerminal";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { MetricStrip } from "@/components/ui/MetricStrip";
 import { Portrait } from "@/components/ui/Portrait";
@@ -84,8 +86,15 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
           </nav>
         </div>
 
-        {/* Terminal do agente. Vazio até a Task 9. */}
-        <div>{agentSlot}</div>
+        <div>
+          {agentSlot ?? (
+            <>
+              {/* Desktop: terminal aberto no hero. Mobile: barra + folha. */}
+              <AgentTerminal className="hidden md:flex" />
+              <AgentSheet />
+            </>
+          )}
+        </div>
       </div>
     </header>
   );
