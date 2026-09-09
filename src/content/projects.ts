@@ -26,13 +26,13 @@ export const projects: Localized<Project[]> = {
       kind: "Business management SaaS · personal project",
       period: "02/2025 – Present",
       summary:
-        "Full-stack business management SaaS covering CRM, invoicing and financial reporting, with a finance module that issues NFC-e electronic invoices.",
+        "Multi-tenant SaaS where a business connects its WhatsApp number and an LLM agent with retrieval over its own documents answers customers, handing off to a human when it should. Around it: CRM, scheduling, financial reporting and a consignment module.",
       highlights: [
         "From zero to production on a Linux VPS with over 300 deploys in 3 months, working solo",
         "Docker infrastructure, JWT authentication and REST APIs",
         "AI agents assisting across the entire development cycle",
       ],
-      stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
+      stack: "Node.js · Express · Prisma · PostgreSQL + pgvector · RabbitMQ · Redis · React 19 · Vite · Stripe · Z-API (WhatsApp) · Docker",
       href: "https://bernyflow.com.br",
       caseStudyHref: "/work/bernyflow",
     },
@@ -77,13 +77,13 @@ export const projects: Localized<Project[]> = {
       kind: "SaaS de gestão empresarial · projeto próprio",
       period: "02/2025 – Atual",
       summary:
-        "SaaS de gestão empresarial fullstack com CRM, faturamento e relatórios financeiros, incluindo módulo financeiro com emissão de NFC-e.",
+        "SaaS multi-tenant em que a empresa conecta o número de WhatsApp e um agente de LLM com busca sobre os documentos dela atende o cliente, repassando para um humano quando é o caso. Em volta: CRM, agendamento, relatórios financeiros e um módulo de consignação.",
       highlights: [
         "Do zero à produção em VPS Linux, com mais de 300 deploys em 3 meses atuando sozinho",
         "Infraestrutura Docker, autenticação JWT e APIs REST",
         "Agentes de IA assistindo todo o ciclo de desenvolvimento",
       ],
-      stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
+      stack: "Node.js · Express · Prisma · PostgreSQL + pgvector · RabbitMQ · Redis · React 19 · Vite · Stripe · Z-API (WhatsApp) · Docker",
       href: "https://bernyflow.com.br",
       caseStudyHref: "/work/bernyflow",
     },
@@ -128,13 +128,13 @@ export const projects: Localized<Project[]> = {
       kind: "SaaS de gestión empresarial · proyecto propio",
       period: "02/2025 – Actual",
       summary:
-        "SaaS de gestión empresarial full-stack con CRM, facturación e informes financieros, incluyendo un módulo financiero con emisión de NFC-e.",
+        "SaaS multi-tenant donde la empresa conecta su número de WhatsApp y un agente de LLM con búsqueda sobre sus propios documentos atiende al cliente, derivándolo a una persona cuando corresponde. Alrededor: CRM, agenda, informes financieros y un módulo de consignación.",
       highlights: [
         "De cero a producción en un VPS Linux, con más de 300 despliegues en 3 meses trabajando solo",
         "Infraestructura Docker, autenticación JWT y APIs REST",
         "Agentes de IA asistiendo en todo el ciclo de desarrollo",
       ],
-      stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
+      stack: "Node.js · Express · Prisma · PostgreSQL + pgvector · RabbitMQ · Redis · React 19 · Vite · Stripe · Z-API (WhatsApp) · Docker",
       href: "https://bernyflow.com.br",
       caseStudyHref: "/work/bernyflow",
     },

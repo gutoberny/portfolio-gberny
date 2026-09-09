@@ -87,7 +87,7 @@ export const agentKnowledge: KnowledgeTopic[] = [
   {
     topic: "BernyFlow",
     facts: [
-      "His own business management SaaS: CRM, invoicing, financial reporting, and a finance module that issues NFC-e electronic invoices.",
+      "His own multi-tenant SaaS: businesses connect a WhatsApp number and an LLM agent with retrieval over their own documents answers customers and hands off to a human when needed, with CRM, scheduling, financial reporting and a consignment module around it. Written in JavaScript, not TypeScript — unlike his other projects.",
       "JWT authentication, REST APIs, Docker on a Linux VPS. From zero to production with 300+ deploys in 3 months, working solo with AI agents across the whole cycle.",
     ],
   },
