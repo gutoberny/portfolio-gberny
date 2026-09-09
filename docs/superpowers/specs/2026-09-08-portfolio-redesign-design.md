@@ -91,7 +91,7 @@ proposital — o agente é o que se quer que a pessoa note.
 | `--paper` | `#fbfaf8` | fundo |
 | `--ink` | `#14171a` | texto principal e títulos |
 | `--body` | `#4a5560` | corpo de texto |
-| `--muted` | `#6b7482` | rótulos (escurecido em relação ao mockup, por contraste) |
+| `--muted` | `#6b7482` | rótulos (escurecido em relação ao mockup, por contraste) — sobre `--paper` (`#fbfaf8`) dá 4,53:1, o mínimo de AA para texto pequeno; **não clarear** este token sem reconferir o contraste |
 | `--rule` | `#e2ded6` | filetes e divisórias |
 | `--term-bg` | `#0b0e12` | fundo do terminal |
 | `--term-fg` | `#adbac7` | resposta do agente |
@@ -181,7 +181,9 @@ A página que converte hiring manager técnico. Seis blocos:
    multicanal (WhatsApp, widget embedável, e-mail, API pública, MCP) → fila RabbitMQ →
    orquestrador assíncrono de 14 etapas → RAG no pgvector / tool calling / guardrails →
    resposta ou handoff humano (human-in-the-loop). É o artefato mais valioso da página.
-3. **Engineering decisions** — cinco, no formato **decisão → por quê → o que custou**:
+3. **Results** — os quatro números com denominador e data (§2), mais LLMOps/FinOps: consumo
+   de token e custo por tenant e por modelo, tabela de preços versionada, dashboards de uso.
+4. **Engineering decisions** — cinco, no formato **decisão → por quê → o que custou**:
    - camada multi-provider de LLM (OpenAI, Anthropic, OpenWebUI) atrás de interface comum,
      com retry, detecção de capacidade por modelo e troca de provider sem tocar em regra de
      negócio;
@@ -193,8 +195,12 @@ A página que converte hiring manager técnico. Seis blocos:
      interativo, agente padrão, autoAssume), mais intent router e debouncer de mensagens;
    - guardrails de produção: filtro de conteúdo, bloqueio de URL não autorizada, proteção
      contra vazamento de ID interno, validação de argumento de tool.
-4. **Results** — os quatro números com denominador e data (§2), mais LLMOps/FinOps: consumo
-   de token e custo por tenant e por modelo, tabela de preços versionada, dashboards de uso.
+
+   **Correção pós-implementação (revisão de branch completa):** este spec originalmente
+   listava Decisions antes de Results. A página construída inverte a ordem — Results
+   primeiro, Decisions depois — porque a leitura fica melhor: o hiring manager vê a prova
+   (os números) antes do "como", em vez do inverso. Documentando o comportamento real; o
+   código não foi alterado para casar com esta seção.
 5. **What broke, and what I learned** — **o bloco que mais vende**, três incidentes reais e
    a correção (autorizado pelo Gustavo, sem restrição de confidencialidade):
    - **o byte NUL que engolia mensagem na dead-letter queue** — mensagem sumia em silêncio;
@@ -294,8 +300,11 @@ Decisão tomada agora justamente para não ser enxertada depois.
 - Landmarks semânticos (`header`, `main`, `section` com `aria-labelledby`), foco visível em
   todo elemento interativo, e a folha do agente no mobile com armadilha de foco e fechamento
   por `Esc`.
-- `framer-motion` já está instalado; animação **discreta** e respeitando
-  `prefers-reduced-motion`.
+- **Correção pós-implementação (revisão de branch completa):** a animação com
+  `framer-motion` prevista aqui foi **descartada** — nenhum componente entregue a usa — e a
+  dependência foi removida de `package.json`. O motivo é escala: nada no site tem
+  transição complexa o bastante para justificar a biblioteca (12MB+ de bundle) sobre CSS
+  puro/`prefers-reduced-motion` nativo.
 - Foto pela `next/image`, com dimensão explícita para não causar layout shift.
 - Metadados de verdade em `layout.tsx`: título, descrição orientada a recrutador, Open Graph
   e Twitter card (imagem OG gerada via `next/og`), `favicon`, `robots`, `sitemap`. O
