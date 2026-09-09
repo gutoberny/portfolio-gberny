@@ -10,6 +10,9 @@
   --term-fg: #adbac7;
   --term-q: #58a6ff;
   --term-ok: #3fb950;
+  /* Hairline divider/border on the dark terminal — --term-fg at low alpha,
+     so it reads as a subtle rule instead of borrowing --rule (paper theme). */
+  --term-rule: rgba(173, 186, 199, 0.16);
 }
 
 body {

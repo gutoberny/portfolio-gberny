@@ -22,6 +22,24 @@ const OFFLINE_NOTE: Record<string, string> = {
   es: "El agente en vivo no está disponible — mostrando respuestas pre-escritas.",
 };
 
+const HEADER_LABEL: Record<string, string> = {
+  en: "ask my agent",
+  pt: "pergunte ao meu agente",
+  es: "pregunta a mi agente",
+};
+
+const ONLINE_LABEL: Record<string, string> = {
+  en: "● online",
+  pt: "● online",
+  es: "● en línea",
+};
+
+const OFFLINE_LABEL: Record<string, string> = {
+  en: "offline",
+  pt: "offline",
+  es: "desconectado",
+};
+
 export function AgentTerminal({ className = "" }: { className?: string }) {
   const { language } = useLanguage();
   const opening = agentOpening[language];
@@ -66,6 +84,12 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
     setInput("");
     setBusy(true);
 
+    // Se o streaming já inseriu a bolha do assistente antes de a conexão
+    // cair no meio do caminho, o catch precisa SUBSTITUIR o conteúdo dessa
+    // bolha (por id) em vez de acrescentar uma segunda — senão o visitante
+    // vê uma bolha vazia/truncada acima da resposta de fallback.
+    let streamedId: string | null = null;
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -79,6 +103,7 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
       if (!res.ok || !res.body) throw new Error(`status ${res.status}`);
 
       const id = `a${Date.now()}`;
+      streamedId = id;
       setLines((prev) => [...prev, { id, role: "assistant", content: "" }]);
 
       const reader = res.body.getReader();
@@ -91,12 +116,17 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
         setLines((prev) => prev.map((l) => (l.id === id ? { ...l, content: text } : l)));
       }
     } catch {
-      // Requisito de release: nunca mostrar erro cru ao visitante.
+      // Requisito de release: nunca mostrar erro cru ao visitante — e nunca
+      // deixar a bolha vazia do streaming interrompido ao lado da resposta
+      // de fallback. Se a bolha já existe (streamedId setado), substitui o
+      // conteúdo dela; senão (falhou antes do streaming começar), acrescenta.
       setDegraded(true);
-      setLines((prev) => [
-        ...prev,
-        { id: `a${Date.now()}`, role: "assistant", content: localAnswer(q) },
-      ]);
+      const fallback = localAnswer(q);
+      setLines((prev) =>
+        streamedId
+          ? prev.map((l) => (l.id === streamedId ? { ...l, content: fallback } : l))
+          : [...prev, { id: `a${Date.now()}`, role: "assistant", content: fallback }]
+      );
     } finally {
       setBusy(false);
     }
@@ -108,9 +138,9 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
       className={`flex flex-col rounded-lg bg-[color:var(--term-bg)] p-3 font-mono ${className}`}
     >
       <div className="mb-2 flex items-center justify-between">
-        <span className="eyebrow text-[color:var(--term-fg)]">ask my agent</span>
+        <span className="eyebrow text-[color:var(--term-fg)]">{HEADER_LABEL[language]}</span>
         <span className="eyebrow" style={{ color: degraded ? "var(--muted)" : "var(--term-ok)" }}>
-          {degraded ? "offline" : "● online"}
+          {degraded ? OFFLINE_LABEL[language] : ONLINE_LABEL[language]}
         </span>
       </div>
 
@@ -143,7 +173,7 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
             type="button"
             onClick={() => send(s.question)}
             disabled={busy}
-            className="min-h-11 rounded-full border border-white/10 px-3 text-[11px] text-[color:var(--term-fg)] transition-colors hover:border-white/30 disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--term-q)]"
+            className="min-h-11 rounded-full border border-[color:var(--term-rule)] px-3 text-[11px] text-[color:var(--term-fg)] transition-colors hover:border-[color:var(--term-fg)] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--term-q)]"
           >
             {s.question}
           </button>
@@ -155,7 +185,7 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
           e.preventDefault();
           send(input);
         }}
-        className="mt-2 flex items-center gap-2 border-t border-white/10 pt-2"
+        className="mt-2 flex items-center gap-2 border-t border-[color:var(--term-rule)] pt-2"
       >
         <label htmlFor="agent-input" className="sr-only">
           {PLACEHOLDER[language]}
@@ -166,7 +196,7 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder={PLACEHOLDER[language]}
           autoComplete="off"
-          className="min-h-11 flex-1 bg-transparent text-[13px] text-white outline-none placeholder:text-[color:var(--muted)]"
+          className="min-h-11 flex-1 bg-transparent text-[13px] text-[color:var(--term-fg)] outline-none placeholder:text-[color:var(--muted)]"
         />
         <button
           type="submit"
