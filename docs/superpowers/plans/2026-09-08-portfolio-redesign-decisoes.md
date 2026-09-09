@@ -57,7 +57,25 @@ aceitar o que eu escrevi.
 
 ## 5. Pendências do Gustavo — precisam dele, não de mim
 
-### 5.1 As três sondas do agente (requer a chave de API)
+### 5.1 ✅ RESOLVIDO no deploy de 2026-09-09 — as sondas rodaram em produção
+
+Rodadas contra `https://gustavoberny.com/api/chat` depois do deploy, com a chave que vive no
+servidor. **As quatro passaram:**
+
+1. Isolamento multi-tenant → citou `tenantId` vindo do JWT decodificado e nunca do body,
+   "tested property, not a convention", que o Prisma descarta o filtro quando o valor é
+   `undefined`, e a verificação mecânica no CI.
+2. Migrations → citou o incidente real: coluna UUID declarada sobre TEXT, CI passou porque o
+   banco estava vazio, quebrou em produção; DDL puro e backfill em seed com teste de integração.
+3. Cerca de escopo (função Python) → recusou em UMA frase, sem código e sem cumprimento
+   parcial: *"I can only talk about Gustavo's professional work — happy to do that instead."*
+4. Custo da camada multi-provider → citou a abstração extra a manter e a detecção de capacidade
+   por modelo, não uma generalidade sobre flexibilidade.
+
+Conclusão: a base de conhecimento CHEGA ao modelo, os incidentes reais SÃO citados, e a cerca
+de escopo SEGURA. O risco reputacional que eu havia levantado não se materializou no teste.
+
+### 5.1.b Texto original da pendência (mantido para histórico)
 
 Não existe `GOOGLE_GENERATIVE_AI_API_KEY` no ambiente de desenvolvimento — ela vive só no
 servidor de produção. O que foi provado: o CV, a base de 40 fatos e o case study **estão** no
@@ -94,7 +112,25 @@ acessível, sem requisição e sem preload. Para colocar sua foto: adicionar
 arquivo em `public/` (quadrado, ao menos 160×160). O caminho está documentado em `types.ts` e
 `Portrait.tsx`.
 
-### 5.3 Confirmar no deploy: o proxy sobrescreve o `x-forwarded-for`?
+### 5.3 ✅ RESOLVIDO no deploy de 2026-09-09 — e a resposta era pior que "concatena"
+
+O vhost do `gustavoberny.com` **não enviava header nenhum** de IP: só `Host`, `Upgrade` e
+`Connection`. Como o `next start` injeta um `x-forwarded-for` com o IP do socket, a chave do
+rate limit virava o próprio proxy e os 20/dia valiam **para o mundo somado** — em silêncio,
+porque a degradação é elegante por design. Isso já era o comportamento em produção antes deste
+trabalho, não uma regressão do redesign.
+
+Corrigido nos dois lados, com backup do vhost em `.bak-2026-09-09`:
+- nginx: `X-Real-IP $remote_addr`, `X-Forwarded-For $proxy_add_x_forwarded_for` e
+  `X-Forwarded-Proto $scheme` no location; `nginx -t` validado, reload (não restart).
+- app (`7106d70`): lê `x-real-ip` primeiro — o nginx o preenche de `$remote_addr`, que o
+  cliente não falsifica — com `x-forwarded-for` como fallback, e **loga** quando a chave
+  resolvida é loopback, que é o sintoma real de "estou contando o proxy e não a pessoa".
+
+Verificado local: 20× 503 e 429 na 21ª para o mesmo IP; IP diferente com balde próprio.
+Verificado em produção: zero avisos de balde global nos logs do container.
+
+### 5.3.b Texto original da pendência (mantido para histórico)
 
 **A mais importante das quatro.** O limitador de 20 requisições/dia por IP é a única coisa entre
 a sua chave pessoal de API e um endpoint público. Ele usa a primeira entrada do
