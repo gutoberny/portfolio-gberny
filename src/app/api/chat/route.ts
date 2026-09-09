@@ -2,6 +2,7 @@ import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 import { getContent, type Lang } from "@/content";
 import { agentKnowledge } from "@/content/agentKnowledge";
+import { caseStudy } from "@/content/caseStudy";
 import rateLimit from "@/lib/rate-limit";
 import { headers } from "next/headers";
 
@@ -82,6 +83,10 @@ ${JSON.stringify(content, null, 2)}
 
 ENGINEERING KNOWLEDGE (deeper detail about his projects, beyond the resume):
 ${JSON.stringify(agentKnowledge, null, 2)}
+
+FEATURED CASE STUDY (the deepest account of the Agents-IA platform, including the
+engineering decisions with their cost and the incidents that happened in production):
+${JSON.stringify(caseStudy[language], null, 2)}
 `.trim();
 
   const result = streamText({

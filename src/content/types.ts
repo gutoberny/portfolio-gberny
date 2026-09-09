@@ -68,3 +68,38 @@ export interface LanguageSkill {
   name: string;
   level: string;
 }
+
+export interface Decision {
+  decision: string;
+  why: string;
+  cost: string;
+}
+
+export interface Incident {
+  title: string;
+  what: string;
+  fix: string;
+}
+
+export interface CaseStudy {
+  title: string;
+  subtitle: string;
+  context: string[];
+  decisions: Decision[];
+  incidents: Incident[];
+  results: string[];
+  stack: string;
+  labels: {
+    context: string;
+    architecture: string;
+    decisions: string;
+    results: string;
+    incidents: string;
+    stack: string;
+    back: string;
+    decisionWhy: string;
+    decisionCost: string;
+    incidentWhat: string;
+    incidentFix: string;
+  };
+}
