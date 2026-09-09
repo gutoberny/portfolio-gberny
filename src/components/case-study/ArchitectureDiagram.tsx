@@ -54,14 +54,6 @@ function MultilineText({
   );
 }
 
-/** Altura que uma caixa vai ocupar para este texto, sem criar o nó — usado
- * para decidir posições ANTES de desenhar, quando o próximo elemento
- * depende de quanto uma etapa anterior cresceu ao quebrar linha. */
-function boxHeight(text: string, w: number, fontSize: number, minH = 28): number {
-  const lines = wrapLines(text, w, fontSize);
-  return Math.max(minH, lines.length * (fontSize + 3) + 12);
-}
-
 /** Caixa com altura calculada a partir do texto: nada é cortado nem vaza,
  * em nenhum dos três idiomas. Retorna a altura usada para o chamador
  * posicionar o próximo elemento. */
@@ -138,12 +130,14 @@ function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
   const queueX = 200;
   const queueW = 130;
   const orchX = 390;
-  const orchW = 330;
+  // +6 de folga: sem isso orchX + orchW === 720 === largura do viewBox e o
+  // traço direito da caixa do orquestrador fica cortado ao meio.
+  const orchW = 324;
   const stageX = orchX + 12;
   const stageW = orchW - 24;
   const deliveryX = 390;
   const deliveryW = 160;
-  const handoffX = 566;
+  const handoffX = 560;
   const handoffW = 154;
   const fontSize = 11;
 
@@ -151,11 +145,9 @@ function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
   let leftY = 26;
   const leftNodes: ReactNode[] = [];
   labels.channels.forEach((ch, i) => {
-    const h = boxHeight(ch, leftW, fontSize, 28);
-    leftNodes.push(
-      measuredBox({ x: leftX, y: leftY, w: leftW, text: ch, fontSize, minH: 28, arrowId: `d-ch-${i}` }).node,
-    );
-    leftY += h + 6;
+    const { node, height } = measuredBox({ x: leftX, y: leftY, w: leftW, text: ch, fontSize, minH: 28, arrowId: `d-ch-${i}` });
+    leftNodes.push(node);
+    leftY += height + 6;
   });
   const leftBottom = leftY - 6;
 
@@ -164,63 +156,37 @@ function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
   let stageY = orchTop + 32;
   const stageNodes: ReactNode[] = [];
   labels.stages.forEach((s, i) => {
-    const h = boxHeight(s, stageW, fontSize, 28);
-    stageNodes.push(
-      measuredBox({ x: stageX, y: stageY, w: stageW, text: s, fontSize, minH: 28, arrowId: `d-stage-${i}` }).node,
-    );
-    stageY += h + 6;
+    const { node, height } = measuredBox({ x: stageX, y: stageY, w: stageW, text: s, fontSize, minH: 28, arrowId: `d-stage-${i}` });
+    stageNodes.push(node);
+    stageY += height + 6;
   });
   const orchBottom = stageY - 6 + 10;
 
   // Fila: centralizada verticalmente contra a altura real da coluna de canais.
-  const queueH = boxHeight(labels.queue, queueW, fontSize, 32);
+  // A posição final depende da altura, então medimos numa posição provisória
+  // (y=0) e só então deslocamos o nó já pronto — uma única chamada a
+  // measuredBox (e a wrapLines por trás dela), não duas.
+  const queueMeasured = measuredBox({ x: queueX, y: 0, w: queueW, text: labels.queue, dark: true, fontSize, minH: 32, arrowId: "d-queue" });
   const queueCenterY = (26 + leftBottom) / 2;
-  const queueY = queueCenterY - queueH / 2;
-  const queueNode = measuredBox({
-    x: queueX,
-    y: queueY,
-    w: queueW,
-    text: labels.queue,
-    dark: true,
-    fontSize,
-    minH: 32,
-    arrowId: "d-queue",
-  }).node;
+  const queueY = queueCenterY - queueMeasured.height / 2;
+  const queueNode = <g transform={`translate(0, ${queueY})`}>{queueMeasured.node}</g>;
 
   // Linha de entrega/handoff, abaixo do que for mais alto entre canais e orquestrador.
   const contentBottom = Math.max(leftBottom, orchBottom);
   const arrowDownX = orchX + orchW / 2;
   const rowY = contentBottom + 34;
-  const deliveryH = boxHeight(labels.delivery, deliveryW, fontSize, 32);
-  const handoffH = boxHeight(labels.handoff, handoffW, fontSize, 32);
-  const rowH = Math.max(deliveryH, handoffH, 32);
-  const deliveryNode = measuredBox({
-    x: deliveryX,
-    y: rowY,
-    w: deliveryW,
-    text: labels.delivery,
-    dark: true,
-    fontSize,
-    minH: 32,
-    arrowId: "d-delivery",
-  }).node;
-  const handoffNode = measuredBox({
-    x: handoffX,
-    y: rowY,
-    w: handoffW,
-    text: labels.handoff,
-    fontSize,
-    minH: 32,
-    arrowId: "d-handoff",
-  }).node;
+  const deliveryMeasured = measuredBox({ x: deliveryX, y: 0, w: deliveryW, text: labels.delivery, dark: true, fontSize, minH: 32, arrowId: "d-delivery" });
+  const handoffMeasured = measuredBox({ x: handoffX, y: 0, w: handoffW, text: labels.handoff, fontSize, minH: 32, arrowId: "d-handoff" });
+  const rowH = Math.max(deliveryMeasured.height, handoffMeasured.height, 32);
+  const deliveryNode = <g transform={`translate(0, ${rowY})`}>{deliveryMeasured.node}</g>;
+  const handoffNode = <g transform={`translate(0, ${rowY})`}>{handoffMeasured.node}</g>;
 
   const totalHeight = rowY + rowH + 10;
 
   return (
     <svg
       viewBox={`0 0 720 ${totalHeight}`}
-      role="img"
-      aria-label={labels.caption}
+      aria-hidden="true"
       preserveAspectRatio="xMidYMid meet"
       className="hidden h-auto w-full md:block"
     >
@@ -332,8 +298,7 @@ function MobileDiagram({ labels }: { labels: DiagramLabels }) {
   return (
     <svg
       viewBox={`0 0 ${W} ${totalHeight}`}
-      role="img"
-      aria-label={labels.caption}
+      aria-hidden="true"
       preserveAspectRatio="xMidYMid meet"
       className="h-auto w-full md:hidden"
     >
@@ -348,9 +313,14 @@ function MobileDiagram({ labels }: { labels: DiagramLabels }) {
 export function ArchitectureDiagram({ labels }: { labels: DiagramLabels }) {
   return (
     <figure className="my-2">
+      {/* Decisão da revisão: as duas <svg> ficam aria-hidden e a descrição
+          mora só no figcaption — assim o leitor de tela ouve a legenda uma
+          única vez em vez de duas (aria-label da svg + figcaption). */}
       <DesktopDiagram labels={labels} />
       <MobileDiagram labels={labels} />
-      <figcaption className="eyebrow mt-3">{labels.caption}</figcaption>
+      <figcaption className="mt-3 text-[13px] normal-case tracking-normal text-[color:var(--muted)]">
+        {labels.caption}
+      </figcaption>
     </figure>
   );
 }
