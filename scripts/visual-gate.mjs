@@ -15,6 +15,8 @@ const WIDTHS = [
 const ROUTES = [
   { path: "/", name: "home" },
   { path: "/work/agents-ia", name: "case-study" },
+  { path: "/work/bernyflow", name: "case-study-bernyflow" },
+  { path: "/work/liga-dos-vales", name: "case-study-liga-dos-vales" },
 ];
 
 const failures = [];

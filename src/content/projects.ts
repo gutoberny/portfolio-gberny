@@ -34,6 +34,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
       href: "https://bernyflow.com.br",
+      caseStudyHref: "/work/bernyflow",
     },
     {
       slug: "liga-dos-vales",
@@ -48,6 +49,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Next.js · React · Docker on a self-managed VPS",
       href: "https://ligadosvales.com.br",
+      caseStudyHref: "/work/liga-dos-vales",
     },
   ],
   pt: [
@@ -83,6 +85,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
       href: "https://bernyflow.com.br",
+      caseStudyHref: "/work/bernyflow",
     },
     {
       slug: "liga-dos-vales",
@@ -97,6 +100,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Next.js · React · Docker em VPS próprio",
       href: "https://ligadosvales.com.br",
+      caseStudyHref: "/work/liga-dos-vales",
     },
   ],
   es: [
@@ -132,6 +136,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Node.js · TypeScript · React · PostgreSQL · Prisma · Docker",
       href: "https://bernyflow.com.br",
+      caseStudyHref: "/work/bernyflow",
     },
     {
       slug: "liga-dos-vales",
@@ -146,6 +151,7 @@ export const projects: Localized<Project[]> = {
       ],
       stack: "Next.js · React · Docker en VPS propio",
       href: "https://ligadosvales.com.br",
+      caseStudyHref: "/work/liga-dos-vales",
     },
   ],
 };
