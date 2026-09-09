@@ -297,15 +297,27 @@ Decisão tomada agora justamente para não ser enxertada depois.
 
 - **Contraste AA em todo texto**, incluindo os rótulos minúsculos — foi por isso que
   `--muted` escureceu e os rótulos subiram para 10–11px.
-- Landmarks semânticos (`header`, `main`, `section` com `aria-labelledby`), foco visível em
-  todo elemento interativo, e a folha do agente no mobile com armadilha de foco e fechamento
-  por `Esc`.
+- Landmarks semânticos (`main`, `footer` de contato, `section` com `aria-labelledby`), foco
+  visível em todo elemento interativo, e a folha do agente no mobile com armadilha de foco e
+  fechamento por `Esc` **e pelo botão** (X).
+  **Correção pós-implementação:** nenhuma das duas páginas usa `<header>`/landmark `banner`
+  — o hero (home) e o bloco de título do case study são `<section>` dentro de `<main>`, para
+  que o conteúdo primário fique dentro do landmark principal em vez de fora dele; só o
+  `<footer>` de contato ficou como landmark (`contentinfo`), por ser realmente chrome do
+  site.
 - **Correção pós-implementação (revisão de branch completa):** a animação com
   `framer-motion` prevista aqui foi **descartada** — nenhum componente entregue a usa — e a
   dependência foi removida de `package.json`. O motivo é escala: nada no site tem
   transição complexa o bastante para justificar a biblioteca (12MB+ de bundle) sobre CSS
   puro/`prefers-reduced-motion` nativo.
-- Foto pela `next/image`, com dimensão explícita para não causar layout shift.
+- **Correção pós-implementação (revisão de branch completa):** não existe foto do dono do
+  site — `Profile.photo` é opcional e nenhum dos três perfis (`profile.ts`) a define.
+  `Portrait` renderiza o monograma "GB" direto (sem `next/image`, sem requisição, sem
+  preload) quando `src` está ausente, com `role="img"`/`aria-label` para acessibilidade —
+  esse é o estado que vai para produção, não um fallback de erro. Quando uma foto real for
+  fornecida, basta adicionar `photo: { src, alt }` de volta aos três idiomas em `profile.ts`
+  e colocar o arquivo em `public/`; `Portrait` volta a usar `next/image` com dimensão
+  explícita (como este item originalmente previa) sem qualquer outra mudança de código.
 - Metadados de verdade em `layout.tsx`: título, descrição orientada a recrutador, Open Graph
   e Twitter card (imagem OG gerada via `next/og`), `favicon`, `robots`, `sitemap`. O
   `metadata` atual ("Minimalist Portfolio - AI Specialist") é substituído.
