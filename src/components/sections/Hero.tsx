@@ -23,7 +23,7 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
   const { profile, heroMetrics } = getContent(language);
 
   return (
-    <header className="shell pt-8 pb-10 md:pt-14">
+    <section className="shell pt-8 pb-10 md:pt-14">
       {/* No mobile o switcher ganha linha própria: em conjunto com foto e
           disponibilidade na coluna direita ele espremia o eyebrow em 3
           linhas. No desktop ele volta para a coluna direita, junto da foto
@@ -96,6 +96,6 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
           )}
         </div>
       </div>
-    </header>
+    </section>
   );
 }

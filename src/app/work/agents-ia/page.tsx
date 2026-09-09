@@ -17,23 +17,23 @@ export default function AgentsIaCaseStudy() {
 
   return (
     <>
-      <header className="shell pt-8 md:pt-14">
-        <div className="flex items-start justify-between gap-4">
-          <Link
-            href="/"
-            className="eyebrow inline-flex min-h-11 items-center gap-2 text-[color:var(--body)] hover:text-[color:var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            {l.back}
-          </Link>
-          <LanguageSwitcher />
-        </div>
-
-        <h1 className="display mt-6 text-[23px] md:text-[30px]">{study.title}</h1>
-        <p className="eyebrow mt-3">{study.subtitle}</p>
-      </header>
-
       <main>
+        <section className="shell pt-8 md:pt-14">
+          <div className="flex items-start justify-between gap-4">
+            <Link
+              href="/"
+              className="eyebrow inline-flex min-h-11 items-center gap-2 text-[color:var(--body)] hover:text-[color:var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
+            >
+              <ArrowLeft size={14} aria-hidden="true" />
+              {l.back}
+            </Link>
+            <LanguageSwitcher />
+          </div>
+
+          <h1 className="display mt-6 text-[23px] md:text-[30px]">{study.title}</h1>
+          <p className="eyebrow mt-3">{study.subtitle}</p>
+        </section>
+
         <section className="shell py-10 md:py-14" aria-labelledby="cs-context">
           <SectionHeading eyebrow={l.context} id="cs-context" />
           {study.context.map((p) => (

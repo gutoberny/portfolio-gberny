@@ -10,8 +10,8 @@ import { Stack } from "@/components/sections/Stack";
 export default function Home() {
   return (
     <>
-      <Hero />
       <main>
+        <Hero />
         <FeaturedWork />
         <Projects />
         <HowIWork />
