@@ -11,9 +11,13 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-8">
-      <p id={!title ? id : undefined} className="eyebrow">
-        {eyebrow}
-      </p>
+      {title ? (
+        <p className="eyebrow">{eyebrow}</p>
+      ) : (
+        <h2 id={id} className="eyebrow">
+          {eyebrow}
+        </h2>
+      )}
       {title ? (
         <h2 id={id} className="display mt-3 text-2xl md:text-[28px]">
           {title}
