@@ -178,6 +178,22 @@ try {
         if (!closedAndFocusReturned) fail("folha do agente: Esc não fechou a folha ou não devolveu o foco ao abridor");
         else pass("folha do agente: Esc fecha e devolve o foco ao abridor");
 
+        // Botão X também fecha e devolve o foco — spec §9.4 exige os dois
+        // caminhos (Esc E o botão), não só o teclado.
+        await page.click('button[data-gate="agent"]');
+        await page.waitForSelector('[role="dialog"]');
+        await page.click('[role="dialog"] > div:first-child > button');
+        await new Promise((r) => setTimeout(r, 150));
+
+        const closedAndFocusReturnedByButton = await page.evaluate(() => {
+          const dialogGone = !document.querySelector('[role="dialog"]');
+          const active = document.activeElement;
+          const focusOnOpener = !!active && active.tagName === "BUTTON" && active.getAttribute("data-gate") === "agent";
+          return dialogGone && focusOnOpener;
+        });
+        if (!closedAndFocusReturnedByButton) fail("folha do agente: botão X não fechou a folha ou não devolveu o foco ao abridor");
+        else pass("folha do agente: botão X fecha e devolve o foco ao abridor");
+
         // Sugestão sem chave de API: nota offline + resposta pré-escrita,
         // sem erro cru na tela (spec §6 — requisito de release).
         await page.click('button[data-gate="agent"]');
