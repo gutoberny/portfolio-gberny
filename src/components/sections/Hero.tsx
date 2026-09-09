@@ -49,7 +49,7 @@ export function Hero({ agentSlot }: { agentSlot?: ReactNode }) {
           <div className="hidden md:block">
             <LanguageSwitcher />
           </div>
-          <Portrait src={profile.photo.src} alt={profile.photo.alt} size={40} />
+          <Portrait src={profile.photo?.src} alt={profile.photo?.alt ?? profile.name} size={40} />
           <p className="eyebrow max-w-[120px] text-right md:max-w-none">{profile.availability}</p>
         </div>
       </div>

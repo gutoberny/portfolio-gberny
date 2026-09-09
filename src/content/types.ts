@@ -15,7 +15,10 @@ export interface Profile {
   pitch: string[];
   availability: string;
   links: Link[];
-  photo: { src: string; alt: string };
+  /** Ausente hoje — não há foto do dono do site. Quando houver uma, defina
+   * este campo em `profile.ts` (os três idiomas) e `Portrait` passa a
+   * renderizá-la automaticamente; nenhuma outra mudança é necessária. */
+  photo?: { src: string; alt: string };
 }
 
 /** Um número do hero. `detail` carrega o denominador ou a data — nunca vazio. */
