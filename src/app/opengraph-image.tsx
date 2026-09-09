@@ -32,6 +32,9 @@ export default async function OpengraphImage() {
           <span>153k msgs/mo</span>
           <span>$0.12 per conversation</span>
         </div>
+        <div style={{ marginTop: 16, fontSize: 18, color: "#6b7482" }}>
+          6,570 of 7,725 conversations · Aug/2026
+        </div>
       </div>
     ),
     size
