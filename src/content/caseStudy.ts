@@ -62,6 +62,7 @@ const en: CaseStudy = {
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
   diagram: {
     intake: "Multi-channel intake",
+    channels: ["WhatsApp", "Web widget", "Email", "Public API", "MCP"],
     queue: "RabbitMQ queue",
     orchestrator: "Async orchestrator · 14 stages",
     stages: [
@@ -153,6 +154,7 @@ const pt: CaseStudy = {
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
   diagram: {
     intake: "Entrada multicanal",
+    channels: ["WhatsApp", "Widget web embarcável", "E-mail", "API pública", "MCP"],
     queue: "Fila RabbitMQ",
     orchestrator: "Orquestrador assíncrono · 14 etapas",
     stages: [
@@ -244,6 +246,7 @@ const es: CaseStudy = {
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
   diagram: {
     intake: "Entrada multicanal",
+    channels: ["WhatsApp", "Widget web integrable", "Correo", "API pública", "MCP"],
     queue: "Cola RabbitMQ",
     orchestrator: "Orquestador asíncrono · 14 etapas",
     stages: [

@@ -83,6 +83,7 @@ export interface Incident {
 
 export interface DiagramLabels {
   intake: string;
+  channels: string[];
   queue: string;
   orchestrator: string;
   stages: string[];

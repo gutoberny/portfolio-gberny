@@ -1,14 +1,7 @@
 import type { ReactNode } from "react";
+import type { DiagramLabels } from "@/content/types";
 
-export interface DiagramLabels {
-  intake: string;
-  queue: string;
-  orchestrator: string;
-  stages: string[];
-  delivery: string;
-  handoff: string;
-  caption: string;
-}
+export type { DiagramLabels };
 
 const MONO = "var(--font-geist-mono), monospace";
 
@@ -59,6 +52,14 @@ function MultilineText({
       ))}
     </text>
   );
+}
+
+/** Altura que uma caixa vai ocupar para este texto, sem criar o nó — usado
+ * para decidir posições ANTES de desenhar, quando o próximo elemento
+ * depende de quanto uma etapa anterior cresceu ao quebrar linha. */
+function boxHeight(text: string, w: number, fontSize: number, minH = 28): number {
+  const lines = wrapLines(text, w, fontSize);
+  return Math.max(minH, lines.length * (fontSize + 3) + 12);
 }
 
 /** Caixa com altura calculada a partir do texto: nada é cortado nem vaza,
@@ -126,25 +127,98 @@ function ArrowheadDef({ id }: { id: string }) {
 }
 
 /** Layout largo (tablet/desktop): entrada à esquerda, fila, orquestrador com
- * as 5 etapas empilhadas, saída à direita. */
+ * as 5 etapas empilhadas, saída à direita. Todas as alturas são calculadas a
+ * partir do texto — nenhuma caixa usa um passo vertical fixo — porque PT/ES
+ * têm rótulos mais longos que o inglês ("Widget web embarcável" vs. "Web
+ * widget") e um passo fixo faria uma caixa que quebrou linha invadir a
+ * próxima. */
 function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
-  const channels = ["WhatsApp", "Web widget", "Email", "Public API", "MCP"];
-  const stageEls = labels.stages.map((s, i) => {
-    const { node } = measuredBox({
-      x: 402,
-      y: 58 + i * 32,
-      w: 306,
-      text: s,
-      fontSize: 11,
-      minH: 28,
-      arrowId: `d-stage-${i}`,
-    });
-    return node;
+  const leftX = 0;
+  const leftW = 150;
+  const queueX = 200;
+  const queueW = 130;
+  const orchX = 390;
+  const orchW = 330;
+  const stageX = orchX + 12;
+  const stageW = orchW - 24;
+  const deliveryX = 390;
+  const deliveryW = 160;
+  const handoffX = 566;
+  const handoffW = 154;
+  const fontSize = 11;
+
+  // Coluna de canais de entrada.
+  let leftY = 26;
+  const leftNodes: ReactNode[] = [];
+  labels.channels.forEach((ch, i) => {
+    const h = boxHeight(ch, leftW, fontSize, 28);
+    leftNodes.push(
+      measuredBox({ x: leftX, y: leftY, w: leftW, text: ch, fontSize, minH: 28, arrowId: `d-ch-${i}` }).node,
+    );
+    leftY += h + 6;
   });
+  const leftBottom = leftY - 6;
+
+  // Etapas dentro do orquestrador.
+  const orchTop = 26;
+  let stageY = orchTop + 32;
+  const stageNodes: ReactNode[] = [];
+  labels.stages.forEach((s, i) => {
+    const h = boxHeight(s, stageW, fontSize, 28);
+    stageNodes.push(
+      measuredBox({ x: stageX, y: stageY, w: stageW, text: s, fontSize, minH: 28, arrowId: `d-stage-${i}` }).node,
+    );
+    stageY += h + 6;
+  });
+  const orchBottom = stageY - 6 + 10;
+
+  // Fila: centralizada verticalmente contra a altura real da coluna de canais.
+  const queueH = boxHeight(labels.queue, queueW, fontSize, 32);
+  const queueCenterY = (26 + leftBottom) / 2;
+  const queueY = queueCenterY - queueH / 2;
+  const queueNode = measuredBox({
+    x: queueX,
+    y: queueY,
+    w: queueW,
+    text: labels.queue,
+    dark: true,
+    fontSize,
+    minH: 32,
+    arrowId: "d-queue",
+  }).node;
+
+  // Linha de entrega/handoff, abaixo do que for mais alto entre canais e orquestrador.
+  const contentBottom = Math.max(leftBottom, orchBottom);
+  const arrowDownX = orchX + orchW / 2;
+  const rowY = contentBottom + 34;
+  const deliveryH = boxHeight(labels.delivery, deliveryW, fontSize, 32);
+  const handoffH = boxHeight(labels.handoff, handoffW, fontSize, 32);
+  const rowH = Math.max(deliveryH, handoffH, 32);
+  const deliveryNode = measuredBox({
+    x: deliveryX,
+    y: rowY,
+    w: deliveryW,
+    text: labels.delivery,
+    dark: true,
+    fontSize,
+    minH: 32,
+    arrowId: "d-delivery",
+  }).node;
+  const handoffNode = measuredBox({
+    x: handoffX,
+    y: rowY,
+    w: handoffW,
+    text: labels.handoff,
+    fontSize,
+    minH: 32,
+    arrowId: "d-handoff",
+  }).node;
+
+  const totalHeight = rowY + rowH + 10;
 
   return (
     <svg
-      viewBox="0 0 720 420"
+      viewBox={`0 0 720 ${totalHeight}`}
       role="img"
       aria-label={labels.caption}
       preserveAspectRatio="xMidYMid meet"
@@ -157,24 +231,23 @@ function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
       <text x="0" y="14" fontSize="10" letterSpacing="1.5" fontFamily={MONO} fill="var(--muted)">
         {labels.intake.toUpperCase()}
       </text>
-      {channels.map((ch, i) => measuredBox({ x: 0, y: 26 + i * 34, w: 130, text: ch, fontSize: 11, arrowId: `d-ch-${i}` }).node)}
+      {leftNodes}
 
-      {arrow(134, 100, 196, 100, "arrowhead-desktop")}
+      {arrow(leftW + 4, queueCenterY, queueX - 4, queueCenterY, "arrowhead-desktop")}
+      {queueNode}
+      {arrow(queueX + queueW + 4, queueCenterY, orchX - 4, queueCenterY, "arrowhead-desktop")}
 
-      {measuredBox({ x: 200, y: 84, w: 120, text: labels.queue, dark: true, fontSize: 11, minH: 32, arrowId: "d-queue" }).node}
-      {arrow(324, 100, 386, 100, "arrowhead-desktop")}
-
-      <rect x="390" y="26" width="330" height="200" rx="4" fill="none" stroke="var(--rule)" />
-      <text x="402" y="46" fontSize="10" letterSpacing="1.5" fontFamily={MONO} fill="var(--muted)">
+      <rect x={orchX} y={orchTop} width={orchW} height={orchBottom - orchTop} rx="4" fill="none" stroke="var(--rule)" />
+      <text x={orchX + 12} y={orchTop + 20} fontSize="10" letterSpacing="1.5" fontFamily={MONO} fill="var(--muted)">
         {labels.orchestrator.toUpperCase()}
       </text>
-      {stageEls}
+      {stageNodes}
 
-      {arrow(555, 232, 555, 268, "arrowhead-desktop")}
+      {arrow(arrowDownX, contentBottom + 4, arrowDownX, rowY - 4, "arrowhead-desktop")}
 
-      {measuredBox({ x: 390, y: 274, w: 160, text: labels.delivery, dark: true, fontSize: 11, minH: 32, arrowId: "d-delivery" }).node}
-      {measuredBox({ x: 566, y: 274, w: 154, text: labels.handoff, fontSize: 11, minH: 32, arrowId: "d-handoff" }).node}
-      {arrow(550, 290, 562, 290, "arrowhead-desktop")}
+      {deliveryNode}
+      {handoffNode}
+      {arrow(deliveryX + deliveryW + 4, rowY + rowH / 2, handoffX - 4, rowY + rowH / 2, "arrowhead-desktop")}
     </svg>
   );
 }
@@ -185,7 +258,6 @@ function DesktopDiagram({ labels }: { labels: DiagramLabels }) {
 function MobileDiagram({ labels }: { labels: DiagramLabels }) {
   const W = 340;
   const cx = W / 2;
-  const channels = ["WhatsApp", "Web widget", "Email", "Public API", "MCP"];
   const nodes: ReactNode[] = [];
   let y = 0;
 
@@ -196,7 +268,7 @@ function MobileDiagram({ labels }: { labels: DiagramLabels }) {
   );
   y += 22;
 
-  for (const ch of channels) {
+  for (const ch of labels.channels) {
     const { node, height } = measuredBox({ x: 0, y, w: W, text: ch, fontSize: 13, minH: 30, arrowId: `m-ch-${ch}` });
     nodes.push(node);
     y += height + 6;
