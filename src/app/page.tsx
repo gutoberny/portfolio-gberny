@@ -9,15 +9,17 @@ import { Stack } from "@/components/sections/Stack";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
-      <FeaturedWork />
-      <Projects />
-      <HowIWork />
-      <Experience />
-      <Stack />
-      <Education />
+      <main>
+        <FeaturedWork />
+        <Projects />
+        <HowIWork />
+        <Experience />
+        <Stack />
+        <Education />
+      </main>
       <Contact />
-    </main>
+    </>
   );
 }

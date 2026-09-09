@@ -11,9 +11,13 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
+            className="group inline-flex min-h-11 items-center gap-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
           >
-            {project.name}
+            {/* Sublinhado no span, dimensionado ao texto — mesmo padrão de
+                Hero/Contact — para não riscar o ícone junto. */}
+            <span className="border-b border-transparent group-hover:border-[color:var(--ink)]">
+              {project.name}
+            </span>
             <ArrowUpRight size={15} aria-hidden="true" />
           </a>
         ) : (
