@@ -60,6 +60,22 @@ const en: CaseStudy = {
   ],
   stack:
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
+  diagram: {
+    intake: "Multi-channel intake",
+    queue: "RabbitMQ queue",
+    orchestrator: "Async orchestrator · 14 stages",
+    stages: [
+      "Agent loading & routing (7 priority levels)",
+      "RAG retrieval · pgvector on PostgreSQL 16",
+      "LLM call · multi-provider layer",
+      "Tool calling · registry, HTTP, MCP",
+      "Guardrails · content, scope, ID leak, tool args",
+    ],
+    delivery: "Delivery to channel",
+    handoff: "Human handoff",
+    caption:
+      "Multi-channel intake lands on a RabbitMQ queue; an asynchronous, idempotent orchestrator runs 14 stages — agent routing, RAG retrieval, LLM call, tool execution and guardrails — before delivering the answer or handing the conversation to a human. The five stages shown here summarise the 14.",
+  },
   labels: {
     context: "Context",
     architecture: "Architecture",
@@ -135,6 +151,22 @@ const pt: CaseStudy = {
   ],
   stack:
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
+  diagram: {
+    intake: "Entrada multicanal",
+    queue: "Fila RabbitMQ",
+    orchestrator: "Orquestrador assíncrono · 14 etapas",
+    stages: [
+      "Carregamento e roteamento de agente (7 níveis de prioridade)",
+      "Recuperação RAG · pgvector no PostgreSQL 16",
+      "Chamada de LLM · camada multi-provedor",
+      "Chamada de ferramentas · registro, HTTP, MCP",
+      "Guardrails · conteúdo, escopo, vazamento de ID, argumentos",
+    ],
+    delivery: "Entrega no canal",
+    handoff: "Transferência para humano",
+    caption:
+      "A entrada multicanal cai numa fila RabbitMQ; um orquestrador assíncrono e idempotente roda 14 etapas — roteamento de agente, recuperação RAG, chamada de LLM, execução de ferramentas e guardrails — antes de entregar a resposta ou transferir a conversa para um humano. As cinco etapas mostradas aqui resumem as 14.",
+  },
   labels: {
     context: "Contexto",
     architecture: "Arquitetura",
@@ -210,6 +242,22 @@ const es: CaseStudy = {
   ],
   stack:
     "Node 22 · TypeScript · Express 5 · Prisma 6 · Zod · React 19 · Vite 6 · Tailwind 4 · PostgreSQL 16 + pgvector · Redis · RabbitMQ · Socket.io · Docker · Bitbucket Pipelines · Oracle Cloud (OCI) · Sentry · Prometheus",
+  diagram: {
+    intake: "Entrada multicanal",
+    queue: "Cola RabbitMQ",
+    orchestrator: "Orquestador asíncrono · 14 etapas",
+    stages: [
+      "Carga y enrutamiento de agente (7 niveles de prioridad)",
+      "Recuperación RAG · pgvector en PostgreSQL 16",
+      "Llamada al LLM · capa multi-proveedor",
+      "Llamada a herramientas · registro, HTTP, MCP",
+      "Guardrails · contenido, alcance, fuga de ID, argumentos",
+    ],
+    delivery: "Entrega al canal",
+    handoff: "Transferencia a un humano",
+    caption:
+      "La entrada multicanal cae en una cola RabbitMQ; un orquestador asíncrono e idempotente ejecuta 14 etapas — enrutamiento de agente, recuperación RAG, llamada al LLM, ejecución de herramientas y guardrails — antes de entregar la respuesta o transferir la conversación a un humano. Las cinco etapas mostradas aquí resumen las 14.",
+  },
   labels: {
     context: "Contexto",
     architecture: "Arquitectura",

@@ -81,6 +81,16 @@ export interface Incident {
   fix: string;
 }
 
+export interface DiagramLabels {
+  intake: string;
+  queue: string;
+  orchestrator: string;
+  stages: string[];
+  delivery: string;
+  handoff: string;
+  caption: string;
+}
+
 export interface CaseStudy {
   title: string;
   subtitle: string;
@@ -89,6 +99,7 @@ export interface CaseStudy {
   incidents: Incident[];
   results: string[];
   stack: string;
+  diagram: DiagramLabels;
   labels: {
     context: string;
     architecture: string;

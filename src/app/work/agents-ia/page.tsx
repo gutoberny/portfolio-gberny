@@ -2,6 +2,7 @@
 
 import { caseStudy } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
+import { ArchitectureDiagram } from "@/components/case-study/ArchitectureDiagram";
 import { DecisionList } from "@/components/case-study/DecisionList";
 import { IncidentList } from "@/components/case-study/IncidentList";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
@@ -39,6 +40,11 @@ export default function AgentsIaCaseStudy() {
             {p}
           </p>
         ))}
+      </section>
+
+      <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-architecture">
+        <SectionHeading eyebrow={l.architecture} id="cs-architecture" />
+        <ArchitectureDiagram labels={study.diagram} />
       </section>
 
       <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-results">
