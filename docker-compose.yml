@@ -9,3 +9,11 @@ services:
       - "3002:3000"
     env_file:
       - .env.local
+    # Teto de log: sem isto o json-file cresce sem limite e enche o disco de
+    # um host que roda mais oito containers. Veio de um ajuste feito à mão
+    # direto no servidor (preservado em resgate/producao-2026-09-09).
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

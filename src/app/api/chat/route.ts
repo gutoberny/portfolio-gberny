@@ -28,13 +28,33 @@ const MAX_MESSAGES = 10;
 const MAX_MESSAGE_CHARS = 2000;
 
 export async function POST(req: Request) {
-  // O header pode conter uma lista "cliente, proxy1, proxy2" — só a PRIMEIRA
-  // entrada é o IP real do visitante; entradas seguintes são acrescentadas
-  // por proxies confiáveis. Usar o header inteiro como chave deixa o
-  // visitante variar a própria chave a cada requisição (ex.: acrescentando
-  // um valor aleatório), driblando o limite de 20/dia/IP por completo.
-  const xff = (await headers()).get("x-forwarded-for");
-  const ip = xff ? xff.split(",")[0].trim() || "127.0.0.1" : "127.0.0.1";
+  // `x-real-ip` vem primeiro DE PROPÓSITO: o nginx o preenche com
+  // `$remote_addr`, o IP da conexão TCP, que o cliente não consegue
+  // falsificar. O `x-forwarded-for` é fallback e é escolha pior — pode
+  // conter a lista "cliente, proxy1, proxy2", e mesmo pegando só a primeira
+  // entrada o valor é fornecido pelo cliente quando o proxy acrescenta em
+  // vez de sobrescrever.
+  //
+  // Se nenhum dos dois trouxer o IP do visitante, todos colapsam na mesma
+  // chave e os 20/dia passam a valer para o mundo somado — o agente cairia
+  // no fallback pré-escrito para todo mundo após a 20ª mensagem do dia,
+  // silenciosamente, porque a degradação é elegante por design.
+  //
+  // O aviso abaixo NÃO testa "header ausente": o `next start` injeta um
+  // `x-forwarded-for` com o IP do socket quando o header não vem, então essa
+  // condição nunca seria verdadeira (verificado). O que importa é se a chave
+  // resolvida é um endereço de loopback — atrás de um proxy o IP do visitante
+  // nunca é loopback, então loopback significa que estamos contando o proxy
+  // e não a pessoa.
+  const requestHeaders = await headers();
+  const realIp = requestHeaders.get("x-real-ip")?.trim();
+  const forwardedFor = requestHeaders.get("x-forwarded-for")?.split(",")[0].trim();
+  const ip = realIp || forwardedFor || "sem-ip";
+  if (ip === "sem-ip" || ip === "127.0.0.1" || ip === "::1" || ip === "::ffff:127.0.0.1") {
+    console.warn(
+      `[chat] chave do rate limit não identifica o visitante (${ip}): 20/dia virou balde global. Conferir proxy_set_header X-Real-IP no vhost.`
+    );
+  }
   if (limiter.isRateLimited(ip, 20)) {
     return new Response("RATE_LIMITED", { status: 429 });
   }
