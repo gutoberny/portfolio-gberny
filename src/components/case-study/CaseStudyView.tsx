@@ -1,6 +1,6 @@
 "use client";
 
-import { caseStudy } from "@/content";
+import { getCaseStudy, type CaseStudySlug } from "@/content/caseStudies";
 import { useLanguage } from "@/context/LanguageContext";
 import { ArchitectureDiagram } from "@/components/case-study/ArchitectureDiagram";
 import { DecisionList } from "@/components/case-study/DecisionList";
@@ -10,9 +10,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export default function AgentsIaCaseStudy() {
+export function CaseStudyView({ slug }: { slug: CaseStudySlug }) {
   const { language } = useLanguage();
-  const study = caseStudy[language];
+  const study = getCaseStudy(slug, language);
   const l = study.labels;
 
   return (
@@ -43,21 +43,25 @@ export default function AgentsIaCaseStudy() {
           ))}
         </section>
 
-        <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-architecture">
-          <SectionHeading eyebrow={l.architecture} id="cs-architecture" />
-          <ArchitectureDiagram labels={study.diagram} />
-        </section>
+        {study.diagram ? (
+          <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-architecture">
+            <SectionHeading eyebrow={l.architecture} id="cs-architecture" />
+            <ArchitectureDiagram labels={study.diagram} />
+          </section>
+        ) : null}
 
-        <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-results">
-          <SectionHeading eyebrow={l.results} id="cs-results" />
-          <ul className="space-y-3">
-            {study.results.map((r) => (
-              <li key={r} className="body-text max-w-[70ch] border-l-2 border-[color:var(--rule)] pl-3 text-sm">
-                {r}
-              </li>
-            ))}
-          </ul>
-        </section>
+        {study.results && study.results.length > 0 ? (
+          <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-results">
+            <SectionHeading eyebrow={l.results} id="cs-results" />
+            <ul className="space-y-3">
+              {study.results.map((r) => (
+                <li key={r} className="body-text max-w-[70ch] border-l-2 border-[color:var(--rule)] pl-3 text-sm">
+                  {r}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         <section className="shell border-t border-[color:var(--rule)] py-10 md:py-14" aria-labelledby="cs-decisions">
           <SectionHeading eyebrow={l.decisions} id="cs-decisions" />

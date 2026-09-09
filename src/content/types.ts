@@ -107,9 +107,16 @@ export interface CaseStudy {
   context: string[];
   decisions: Decision[];
   incidents: Incident[];
-  results: string[];
+  /** Ausente de propósito quando o projeto não tem métrica externa com
+   * denominador — a regra do site é que todo número carrega a sua fonte, e
+   * um case study sem uma delas não deve ganhar um bloco de Resultados
+   * inventado só para preencher a seção. Nunca torne obrigatório de novo. */
+  results?: string[];
   stack: string;
-  diagram: DiagramLabels;
+  /** Ausente de propósito quando o projeto não tem um diagrama de
+   * arquitetura real para mostrar — não desenhe um genérico só para
+   * preencher a seção. Nunca torne obrigatório de novo. */
+  diagram?: DiagramLabels;
   labels: {
     context: string;
     architecture: string;

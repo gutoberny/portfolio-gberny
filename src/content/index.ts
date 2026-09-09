@@ -8,7 +8,13 @@ import { stack } from "./stack";
 import type { Job, Lang, LanguageSkill, Metric, Pillar, Profile, Project, StackGroup, Study } from "./types";
 
 export * from "./types";
-export { caseStudy } from "./caseStudy";
+export {
+  CASE_STUDY_SLUGS,
+  getAllCaseStudies,
+  getCaseStudy,
+  isCaseStudySlug,
+  type CaseStudySlug,
+} from "./caseStudies";
 
 export interface SiteContent {
   profile: Profile;
