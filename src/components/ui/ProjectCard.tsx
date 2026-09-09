@@ -1,7 +1,13 @@
-import type { Project } from "@/content";
-import { ArrowUpRight } from "lucide-react";
+import type { Lang, Project } from "@/content";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-export function ProjectCard({ project }: { project: Project }) {
+const CASE_STUDY_CTA: Record<Lang, string> = {
+  en: "Read the case study",
+  pt: "Ler o case study",
+  es: "Leer el caso completo",
+};
+
+export function ProjectCard({ project, language }: { project: Project; language: Lang }) {
   return (
     <article className="flex flex-col border border-[color:var(--rule)] p-5">
       <p className="eyebrow">{project.kind}</p>
@@ -33,6 +39,19 @@ export function ProjectCard({ project }: { project: Project }) {
         ))}
       </ul>
       <p className="eyebrow mt-auto pt-5">{project.stack}</p>
+      {/* Sem isto o case study fica órfão: a página existe, responde 200 e não
+          há nada em lugar nenhum do site apontando para ela. O gate não pega,
+          porque ele navega direto por URL — alcançabilidade é fora do que ele
+          mede. Ver a asserção nova em scripts/visual-gate.mjs. */}
+      {project.caseStudyHref ? (
+        <a
+          href={project.caseStudyHref}
+          className="group mt-4 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium text-[color:var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ink)]"
+        >
+          <span className="border-b border-[color:var(--ink)]">{CASE_STUDY_CTA[language]}</span>
+          <ArrowRight size={15} aria-hidden="true" />
+        </a>
+      ) : null}
     </article>
   );
 }

@@ -227,7 +227,28 @@ try {
     }
   }
 } finally {
-  await browser.close();
+  // ALCANCABILIDADE: toda rota que nao seja a home tem de estar LINKADA a partir
+// da home. Sem isto, uma pagina pode existir, responder 200, passar em todas as
+// checagens acima — e ser inalcancavel para quem nao digita a URL. Foi
+// exatamente o que aconteceu com dois case studies: o gate navega direto por
+// URL, entao "da para chegar aqui?" e estruturalmente fora do que ele media.
+{
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 800 });
+  console.log("\nalcancabilidade a partir da home");
+  await page.goto(BASE + "/", { waitUntil: "networkidle0" });
+  const hrefs = await page.evaluate(() =>
+    [...document.querySelectorAll("a[href]")].map((a) => new URL(a.href, location.origin).pathname)
+  );
+  for (const route of ROUTES) {
+    if (route.path === "/") continue;
+    if (hrefs.includes(route.path)) pass(`${route.path} esta linkada na home`);
+    else fail(`${route.path} existe mas NADA na home aponta para ela (pagina orfa)`);
+  }
+  await page.close();
+}
+
+await browser.close();
 }
 
 if (failures.length) {

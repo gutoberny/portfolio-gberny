@@ -20,7 +20,7 @@ export function Projects() {
       <SectionHeading eyebrow={EYEBROW[language]} id="projects-title" />
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+          <ProjectCard key={p.slug} project={p} language={language} />
         ))}
       </div>
     </section>
