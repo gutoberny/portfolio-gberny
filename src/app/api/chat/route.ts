@@ -104,6 +104,17 @@ export async function POST(req: Request) {
 
   const content = getContent(language);
 
+  // `labels` é cromo de interface do case study ("Back to home", "Why", "What
+  // it cost") — o modelo não tem o que fazer com isso, e mandar três cópias em
+  // cada requisição é entregar informação sobre a qual ele não pode agir. Não
+  // é economia de token (são ~250 no total), é higiene de prompt.
+  const caseStudiesForPrompt = Object.fromEntries(
+    Object.entries(getAllCaseStudies(language)).map(([slug, { labels, ...study }]) => {
+      void labels;
+      return [slug, study];
+    })
+  );
+
   const systemPrompt = `
 You are the AI agent on Gustavo Berny's portfolio site. You answer recruiters and
 hiring managers about Gustavo's work. You speak about him in the third person and
@@ -148,7 +159,7 @@ ${JSON.stringify(agentKnowledge, null, 2)}
 CASE STUDIES (the deepest account of all three projects — Agents-IA, BernyFlow and
 the Liga dos Vales portal — including the engineering decisions with their cost and
 the incidents that happened in production):
-${JSON.stringify(getAllCaseStudies(language), null, 2)}
+${JSON.stringify(caseStudiesForPrompt, null, 2)}
 `.trim();
 
   const result = streamText({
