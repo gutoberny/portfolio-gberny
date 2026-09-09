@@ -1,11 +1,11 @@
 "use client";
 
-import { getOtherProjects } from "@/content";
+import { getOtherProjects, type Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const EYEBROW: Record<string, string> = {
+const EYEBROW: Record<Lang, string> = {
   en: "Other projects",
   pt: "Outros projetos",
   es: "Otros proyectos",

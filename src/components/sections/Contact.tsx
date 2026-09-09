@@ -4,7 +4,7 @@ import { getContent } from "@/content";
 import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 
-const COPY: Record<string, { eyebrow: string; title: string }> = {
+const COPY: Record<Lang, { eyebrow: string; title: string }> = {
   en: { eyebrow: "Contact", title: "Open to remote roles in AI engineering." },
   pt: { eyebrow: "Contato", title: "Aberto a vagas remotas em engenharia de IA." },
   es: { eyebrow: "Contacto", title: "Disponible para vacantes remotas en ingeniería de IA." },

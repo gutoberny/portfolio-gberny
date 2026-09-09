@@ -1,17 +1,24 @@
 "use client";
 
+import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AgentTerminal } from "./AgentTerminal";
 
-const BAR: Record<string, string> = {
+const BAR: Record<Lang, string> = {
   en: "> ask my agent about my work_",
   pt: "> pergunte ao meu agente sobre meu trabalho_",
   es: "> pregunta a mi agente sobre mi trabajo_",
 };
 
-const CLOSE: Record<string, string> = { en: "Close", pt: "Fechar", es: "Cerrar" };
+const CLOSE: Record<Lang, string> = { en: "Close", pt: "Fechar", es: "Cerrar" };
+
+const DIALOG_LABEL: Record<Lang, string> = {
+  en: "Ask my agent",
+  pt: "Pergunte ao meu agente",
+  es: "Pregunta a mi agente",
+};
 
 export function AgentSheet() {
   const { language } = useLanguage();
@@ -72,7 +79,7 @@ export function AgentSheet() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Ask my agent"
+          aria-label={DIALOG_LABEL[language]}
           className="fixed inset-0 z-50 flex flex-col bg-[color:var(--term-bg)] md:hidden"
           ref={panelRef}
         >

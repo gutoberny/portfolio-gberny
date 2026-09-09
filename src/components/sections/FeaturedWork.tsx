@@ -1,17 +1,17 @@
 "use client";
 
-import { getFeaturedProject } from "@/content";
+import { getFeaturedProject, type Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ArrowRight } from "lucide-react";
 
-const CTA: Record<string, string> = {
+const CTA: Record<Lang, string> = {
   en: "Read the full case study",
   pt: "Ler o case study completo",
   es: "Leer el caso completo",
 };
 
-const EYEBROW: Record<string, string> = {
+const EYEBROW: Record<Lang, string> = {
   en: "Featured work",
   pt: "Projeto em destaque",
   es: "Proyecto destacado",

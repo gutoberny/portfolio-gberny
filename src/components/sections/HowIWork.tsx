@@ -1,10 +1,10 @@
 "use client";
 
-import { getContent } from "@/content";
+import { getContent, type Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const EYEBROW: Record<string, string> = {
+const EYEBROW: Record<Lang, string> = {
   en: "How I work",
   pt: "Como eu trabalho",
   es: "Cómo trabajo",

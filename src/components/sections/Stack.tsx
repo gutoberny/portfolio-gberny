@@ -1,10 +1,10 @@
 "use client";
 
-import { getContent } from "@/content";
+import { getContent, type Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const EYEBROW: Record<string, string> = { en: "Stack", pt: "Stack", es: "Stack" };
+const EYEBROW: Record<Lang, string> = { en: "Stack", pt: "Stack", es: "Stack" };
 
 export function Stack() {
   const { language } = useLanguage();

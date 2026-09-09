@@ -1,10 +1,10 @@
 "use client";
 
-import { getContent } from "@/content";
+import { getContent, type Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const LABELS: Record<string, { eyebrow: string; languages: string }> = {
+const LABELS: Record<Lang, { eyebrow: string; languages: string }> = {
   en: { eyebrow: "Education", languages: "Languages" },
   pt: { eyebrow: "Formação", languages: "Idiomas" },
   es: { eyebrow: "Formación", languages: "Idiomas" },

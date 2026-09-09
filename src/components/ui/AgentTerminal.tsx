@@ -1,8 +1,9 @@
 "use client";
 
 import { agentOpening, agentSuggestions, type AgentExchange } from "@/content/agentFallback";
+import type { Lang } from "@/content";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 interface Line {
   id: string;
@@ -10,31 +11,31 @@ interface Line {
   content: string;
 }
 
-const PLACEHOLDER: Record<string, string> = {
+const PLACEHOLDER: Record<Lang, string> = {
   en: "Ask anything about my work…",
   pt: "Pergunte qualquer coisa sobre meu trabalho…",
   es: "Pregunta lo que quieras sobre mi trabajo…",
 };
 
-const OFFLINE_NOTE: Record<string, string> = {
+const OFFLINE_NOTE: Record<Lang, string> = {
   en: "The live agent is unavailable right now — showing pre-written answers.",
   pt: "O agente ao vivo está indisponível — exibindo respostas pré-escritas.",
   es: "El agente en vivo no está disponible — mostrando respuestas pre-escritas.",
 };
 
-const HEADER_LABEL: Record<string, string> = {
+const HEADER_LABEL: Record<Lang, string> = {
   en: "ask my agent",
   pt: "pergunte ao meu agente",
   es: "pregunta a mi agente",
 };
 
-const ONLINE_LABEL: Record<string, string> = {
+const ONLINE_LABEL: Record<Lang, string> = {
   en: "● online",
   pt: "● online",
   es: "● en línea",
 };
 
-const OFFLINE_LABEL: Record<string, string> = {
+const OFFLINE_LABEL: Record<Lang, string> = {
   en: "offline",
   pt: "offline",
   es: "desconectado",
@@ -44,6 +45,7 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
   const { language } = useLanguage();
   const opening = agentOpening[language];
   const suggestions = agentSuggestions[language];
+  const inputId = useId();
 
   const [lines, setLines] = useState<Line[]>([
     { id: "q0", role: "user", content: opening.question },
@@ -187,11 +189,11 @@ export function AgentTerminal({ className = "" }: { className?: string }) {
         }}
         className="mt-2 flex items-center gap-2 border-t border-[color:var(--term-rule)] pt-2"
       >
-        <label htmlFor="agent-input" className="sr-only">
+        <label htmlFor={inputId} className="sr-only">
           {PLACEHOLDER[language]}
         </label>
         <input
-          id="agent-input"
+          id={inputId}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={PLACEHOLDER[language]}
